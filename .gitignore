@@ -18,3 +18,14 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> JetBrains PhpStorm ###
+.idea
+
+###> env files ###
+.env
+.env.dev
+.env.test
+
+# Docker development environment
+.mtdocker/
