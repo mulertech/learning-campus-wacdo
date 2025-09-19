@@ -1,6 +1,6 @@
 doctrine:
     dbal:
-        url: '%env(default::DATABASE_URL)%'
+        # Modified by mulertech/docker-dev package for Docker environment
         host: '%env(default::DATABASE_HOST)%'
         port: '%env(default::DATABASE_PORT)%'
         dbname: '%env(default::DATABASE_NAME)%'
