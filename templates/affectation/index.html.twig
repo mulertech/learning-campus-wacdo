@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche des affectations{% endblock %}
+
+{% block body %}
+    <h1>Recherche des affectations</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Collaborateur</th>
+                <th>Fonction</th>
+                <th>Restaurant</th>
+                <th>Ville</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for affectation in affectations %}
+            <tr>
+                <td>{{ affectation.collaborateur.prenom }} {{ affectation.collaborateur.nom }}</td>
+                <td>{{ affectation.fonction.intitule }}</td>
+                <td>{{ affectation.restaurant.nom }}</td>
+                <td>{{ affectation.restaurant.ville }}</td>
+                <td>{{ affectation.dateDebut|date('d/m/Y') }}</td>
+                <td>{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_affectation_show', {'id': affectation.id}) }}">Détail</a>
+                    {% if (not affectation.dateFin) or (affectation.dateFin > date()) %}
+                        <a href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">Modifier</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas d'affectations</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

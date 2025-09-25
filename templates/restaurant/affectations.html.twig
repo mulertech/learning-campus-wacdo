@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affectations de ce restaurant{% endblock %}
+
+{% block body %}
+    <h1>Affectations de ce restaurant</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Poste</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for affectation in restaurant.affectations %}
+            <tr>
+                <td>{{ affectation.collaborateur.prenom }}</td>
+                <td>{{ affectation.collaborateur.nom }}</td>
+                <td>{{ affectation.collaborateur.email }}</td>
+                <td>{{ affectation.fonction.intitule }}</td>
+                <td>{{ affectation.dateDebut|date('d/m/Y') }}</td>
+                <td>{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas d'affectations</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_affectation_new', {'id': restaurant.id}) }}">Affecter un nouveau collaborateur</a>
+{% endblock %}

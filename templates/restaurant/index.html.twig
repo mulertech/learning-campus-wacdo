@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des restaurants{% endblock %}
+
+{% block body %}
+    <h1>Gestion des restaurants</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Code postal</th>
+                <th>Ville</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for restaurant in restaurants %}
+            <tr>
+                <td>{{ restaurant.nom }}</td>
+                <td>{{ restaurant.adresse }}</td>
+                <td>{{ restaurant.codePostal }}</td>
+                <td>{{ restaurant.ville }}</td>
+                <td>
+                    <a href="{{ path('app_restaurant_show', {'id': restaurant.id}) }}">Détail du restaurant</a>
+                    <a href="{{ path('app_restaurant_edit', {'id': restaurant.id}) }}">Modifier un restaurant</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas de restaurant</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_restaurant_new') }}">Créer un nouveau restaurant</a>
+{% endblock %}

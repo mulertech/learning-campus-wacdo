@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le collaborateur{% endblock %}
+
+{% block body %}
+    <h1>Modifier le collaborateur</h1>
+
+    {{ include('collaborateur/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('app_collaborateur_index') }}">Retourner à la liste</a>
+
+    {{ include('collaborateur/_delete_form.html.twig') }}
+
+    <br>
+
+    <h1>Créer une nouvelle affectation pour ce collaborateur :</h1>
+
+    {{ form_start(affectationForm) }}
+    {{ form_widget(affectationForm) }}
+        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(affectationForm) }}
+{% endblock %}

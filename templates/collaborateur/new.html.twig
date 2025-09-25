@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau collaborateur{% endblock %}
+
+{% block body %}
+    <h1>Créer un nouveau collaborateur</h1>
+
+    {{ include('collaborateur/_form.html.twig') }}
+
+    <a href="{{ path('app_collaborateur_index') }}">Retourner à la liste</a>
+{% endblock %}

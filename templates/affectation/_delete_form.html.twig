@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_affectation_delete', {'id': affectation.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette affectation ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ affectation.id) }}">
+    <button class="btn">Supprimer</button>
+</form>

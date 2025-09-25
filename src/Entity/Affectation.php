@@ -5,8 +5,13 @@ namespace App\Entity;
 use App\Repository\AffectationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AffectationRepository::class)]
+#[UniqueEntity(
+    fields: ['collaborateur', 'dateDebut'],
+    message: 'Un collaborateur ne peut pas avoir deux affectations débutant à la même date.',
+)]
 class Affectation
 {
     #[ORM\Id]

@@ -16,6 +16,20 @@ class RestaurantRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurant::class);
     }
 
+    public function findCurrentAffectations($restaurantId)
+    {
+        return $this->createQueryBuilder('r')
+            ->select('c.nom, c.prenom, c.email, f.intitule, a.dateDebut, a.dateFin')
+            ->leftJoin('r.affectations', 'a')
+            ->leftJoin('a.collaborateur', 'c')
+            ->leftJoin('a.fonction', 'f')
+            ->andWhere('r.id = :restaurantId')
+            ->andWhere('a.dateFin IS NULL OR a.dateFin > CURRENT_DATE()')
+            ->setParameter('restaurantId', $restaurantId)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Restaurant[] Returns an array of Restaurant objects
     //     */

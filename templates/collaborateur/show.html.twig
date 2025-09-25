@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collaborateur{% endblock %}
+
+{% block body %}
+    <h1>Collaborateur</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Date de première embauche</th>
+                <th>Administrateur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ collaborateur.prenom }}</td>
+                <td>{{ collaborateur.nom }}</td>
+                <td>{{ collaborateur.email }}</td>
+                <td>{{ collaborateur.datePremiereEmbauche|date('d/m/Y') }}</td>
+                <td>{{ collaborateur.administrateur ? 'Yes' : 'No' }}</td>
+                <th>MotDePasse</th>
+                <td>{{ collaborateur.motDePasse }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Liste des affectations</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Fonction</th>
+            <th>Restaurant</th>
+            <th>Ville</th>
+            <th>Date de début</th>
+            <th>Date de fin</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for affectation in collaborateur.affectations %}
+            <tr>
+                <td>{{ affectation.fonction.intitule }}</td>
+                <td>{{ affectation.restaurant.nom }}</td>
+                <td>{{ affectation.restaurant.ville }}</td>
+                <td>{{ affectation.dateDebut|date('d/m/Y') }}</td>
+                <td>{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_affectation_show', {'id': affectation.id}) }}">Détail</a>
+                    {% if not affectation.dateFin %}
+                        <a href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">Modifier</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas d'affectations</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_collaborateur_index') }}">Retourner à la liste</a>
+
+    <a href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}">Modifier ce collaborateur</a>
+
+    {{ include('collaborateur/_delete_form.html.twig') }}
+{% endblock %}

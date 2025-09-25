@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affectation{% endblock %}
+
+{% block body %}
+    <h1>Affectation</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ affectation.dateDebut ? affectation.dateDebut|date('d/m/Y') : '' }}</td>
+                <td>{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_affectation_index') }}">Retourner à la liste</a>
+
+    {% if not affectation.dateFin %}
+        <a href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">Modifier</a>
+    {% endif %}
+
+    {{ include('affectation/_delete_form.html.twig') }}
+{% endblock %}

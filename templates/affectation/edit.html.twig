@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'affectation{% endblock %}
+
+{% block body %}
+    <h1>Modifier l'affectation</h1>
+
+    {{ include('affectation/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('app_affectation_index') }}">Retourner à la liste</a>
+
+    {{ include('affectation/_delete_form.html.twig') }}
+{% endblock %}
