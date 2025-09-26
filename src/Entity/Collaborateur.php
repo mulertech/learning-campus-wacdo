@@ -31,9 +31,6 @@ class Collaborateur
     #[ORM\Column]
     private ?bool $administrateur = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $motDePasse = null;
-
     /**
      * @var Collection<int, Affectation>
      */
@@ -106,18 +103,6 @@ class Collaborateur
     public function setAdministrateur(bool $administrateur): static
     {
         $this->administrateur = $administrateur;
-
-        return $this;
-    }
-
-    public function getMotDePasse(): ?string
-    {
-        return $this->motDePasse;
-    }
-
-    public function setMotDePasse(?string $motDePasse): static
-    {
-        $this->motDePasse = $motDePasse;
 
         return $this;
     }

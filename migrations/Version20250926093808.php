@@ -24,7 +24,7 @@ final class Version20250926093808 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_F4DD61D3A848E3B1 ON affectation (collaborateur_id)');
         $this->addSql('CREATE INDEX IDX_F4DD61D357889920 ON affectation (fonction_id)');
         $this->addSql('CREATE INDEX IDX_F4DD61D3B1E7706E ON affectation (restaurant_id)');
-        $this->addSql('CREATE TABLE collaborateur (id SERIAL NOT NULL, prenom VARCHAR(255) NOT NULL, nom VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, date_premiere_embauche DATE NOT NULL, administrateur BOOLEAN NOT NULL, mot_de_passe VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE collaborateur (id SERIAL NOT NULL, prenom VARCHAR(255) NOT NULL, nom VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, date_premiere_embauche DATE NOT NULL, administrateur BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE fonction (id SERIAL NOT NULL, intitule VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE restaurant (id SERIAL NOT NULL, nom VARCHAR(255) NOT NULL, adresse VARCHAR(255) NOT NULL, code_postal VARCHAR(10) NOT NULL, ville VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE utilisateur (id SERIAL NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');

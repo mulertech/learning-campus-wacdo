@@ -46,8 +46,7 @@ class AppFixtures extends Fixture
                 ->setNom($faker->lastName())
                 ->setEmail($faker->email())
                 ->setDatePremiereEmbauche($faker->dateTimeBetween())
-                ->setAdministrateur($faker->boolean())
-                ->setMotDePasse($faker->password());
+                ->setAdministrateur(false);
 
             $collaborateurs[] = $collaborateur;
 

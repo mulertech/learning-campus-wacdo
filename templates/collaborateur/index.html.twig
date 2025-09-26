@@ -13,7 +13,6 @@
                 <th>Email</th>
                 <th>Date de première embauche</th>
                 <th>Administrateur</th>
-                <th>Mot de passe</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -25,7 +24,6 @@
                 <td>{{ collaborateur.email }}</td>
                 <td>{{ collaborateur.datePremiereEmbauche|date('d/m/Y') }}</td>
                 <td>{{ collaborateur.administrateur ? 'Yes' : 'No' }}</td>
-                <td>{{ collaborateur.motDePasse }}</td>
                 <td>
                     <a href="{{ path('app_collaborateur_show', {'id': collaborateur.id}) }}">show</a>
                     <a href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}">edit</a>
