@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad28d5127cc9e402292228c65c7a6e07",
+    "content-hash": "85815c4e9c8cfc0e9aa5c49763e7c457",
     "packages": [
         {
             "name": "composer/semver",
@@ -8154,16 +8154,16 @@
         },
         {
             "name": "mulertech/docker-dev",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mulertech/docker-dev.git",
-                "reference": "2e94dbeca782dd4db1dba6213ba191b4659acde8"
+                "reference": "62cde0e5ec8e9a77018d864a692597227fa86217"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mulertech/docker-dev/zipball/2e94dbeca782dd4db1dba6213ba191b4659acde8",
-                "reference": "2e94dbeca782dd4db1dba6213ba191b4659acde8",
+                "url": "https://api.github.com/repos/mulertech/docker-dev/zipball/62cde0e5ec8e9a77018d864a692597227fa86217",
+                "reference": "62cde0e5ec8e9a77018d864a692597227fa86217",
                 "shasum": ""
             },
             "require": {
@@ -8186,9 +8186,9 @@
             "description": "The MulerTech Docker-dev package",
             "support": {
                 "issues": "https://github.com/mulertech/docker-dev/issues",
-                "source": "https://github.com/mulertech/docker-dev/tree/v1.0.7"
+                "source": "https://github.com/mulertech/docker-dev/tree/v1.0.8"
             },
-            "time": "2025-09-25T20:44:43+00:00"
+            "time": "2025-09-26T09:46:22+00:00"
         },
         {
             "name": "myclabs/deep-copy",
