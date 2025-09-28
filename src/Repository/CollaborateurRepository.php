@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Collaborateur;
+use App\Entity\CollaborateurFiltre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,6 +15,35 @@ class CollaborateurRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Collaborateur::class);
+    }
+
+    public function findAllWithFilter(CollaborateurFiltre $collaborateurFiltre): array
+    {
+        // Requête pour obtenir les collaborateurs avec leurs affectations actuelles
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->leftJoin('c.affectations', 'a')
+            ->leftJoin('a.fonction', 'f')
+            ->andWhere('a.dateDebut <= CURRENT_DATE()')
+            ->andWhere('a.dateFin IS NULL OR a.dateFin > CURRENT_DATE()');
+
+
+        if ($collaborateurFiltre->getNom()) {
+            $queryBuilder
+                ->andWhere('LOWER(c.nom) LIKE :nom')
+                ->setParameter('nom', '%' . strtolower($collaborateurFiltre->getNom()) . '%');
+        }
+
+        if ($collaborateurFiltre->getFonction()) {
+            $queryBuilder
+                ->andWhere('f = :fonction')
+                ->setParameter('fonction', $collaborateurFiltre->getFonction());
+        }
+
+        return $queryBuilder
+            ->orderBy('c.nom', 'ASC')
+            ->addOrderBy('c.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**

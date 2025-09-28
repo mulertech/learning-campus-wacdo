@@ -5,6 +5,11 @@
 {% block body %}
     <h1>Gestion des collaborateurs</h1>
 
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Filtrer') }}</button>
+    {{ form_end(form) }}
+
     <table class="table">
         <thead>
             <tr>
@@ -23,10 +28,10 @@
                 <td>{{ collaborateur.nom }}</td>
                 <td>{{ collaborateur.email }}</td>
                 <td>{{ collaborateur.datePremiereEmbauche|date('d/m/Y') }}</td>
-                <td>{{ collaborateur.administrateur ? 'Yes' : 'No' }}</td>
+                <td>{{ collaborateur.administrateur ? 'Oui' : 'Non' }}</td>
                 <td>
-                    <a href="{{ path('app_collaborateur_show', {'id': collaborateur.id}) }}">show</a>
-                    <a href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}">edit</a>
+                    <a href="{{ path('app_collaborateur_show', {'id': collaborateur.id}) }}">Détail</a>
+                    <a href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}

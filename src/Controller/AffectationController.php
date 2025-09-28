@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Affectation;
+use App\Entity\AffectationFiltre;
 use App\Entity\Restaurant;
+use App\Form\AffectationFiltreType;
 use App\Form\AffectationToRestaurantType;
+use App\Form\AffectationCollaborateurToRestaurantType;
 use App\Repository\AffectationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,10 +21,17 @@ use function Symfony\Component\Clock\now;
 final class AffectationController extends AbstractController
 {
     #[Route(name: 'app_affectation_index', methods: ['GET'])]
-    public function index(AffectationRepository $affectationRepository): Response
+    public function index(AffectationRepository $affectationRepository, Request $request): Response
     {
+        $affectationFiltre = new AffectationFiltre();
+        $form = $this->createForm(AffectationFiltreType::class, $affectationFiltre);
+        $form->handleRequest($request);
+
+        $affectations = $affectationRepository->findAllWithFilter($affectationFiltre);
+
         return $this->render('affectation/index.html.twig', [
-            'affectations' => $affectationRepository->findAll(),
+            'affectations' => $affectations,
+            'form' => $form,
         ]);
     }
 
@@ -62,13 +72,14 @@ final class AffectationController extends AbstractController
             return $this->redirectToRoute('app_affectation_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $form = $this->createForm(AffectationToRestaurantType::class, $affectation);
+        $form = $this->createForm(AffectationCollaborateurToRestaurantType::class, $affectation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($affectation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_affectation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_collaborateur_show', ['id' => $affectation->getCollaborateur()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('affectation/edit.html.twig', [

@@ -15,12 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CollaborateurType extends AbstractType
 {
-    private UtilisateurRepository $utilisateurRepository;
-
-    public function __construct(UtilisateurRepository $utilisateurRepository)
-    {
-        $this->utilisateurRepository = $utilisateurRepository;
-    }
+    public function __construct(private readonly UtilisateurRepository $utilisateurRepository){}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -38,10 +33,10 @@ class CollaborateurType extends AbstractType
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
             $collaborateur = $event->getData();
             $form = $event->getForm();
-            
+
             if ($collaborateur && $collaborateur->getEmail() && $collaborateur->isAdministrateur()) {
                 $utilisateur = $this->utilisateurRepository->findOneBy(['email' => $collaborateur->getEmail()]);
-                
+
                 if (!$utilisateur) {
                     $form->get('administrateur')->addError(new FormError(
                         'Impossible de définir le collaborateur administrateur car sa fiche utilisateur n\'existe pas'

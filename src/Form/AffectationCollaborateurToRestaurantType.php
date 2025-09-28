@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Affectation;
 use App\Entity\Fonction;
-use App\Entity\Restaurant;
 use App\Repository\AffectationRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -14,7 +13,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AffectationToCollaborateurType extends AbstractType
+class AffectationCollaborateurToRestaurantType extends AbstractType
 {
     public function __construct(private readonly AffectationRepository $affectationRepository) {}
 
@@ -31,10 +30,6 @@ class AffectationToCollaborateurType extends AbstractType
                 'class' => Fonction::class,
                 'choice_label' => 'intitule',
             ])
-            ->add('restaurant', EntityType::class, [
-                'class' => Restaurant::class,
-                'choice_label' => 'nom',
-            ])
         ;
 
         // Vérifier si le collaborateur est déjà affecté à la même période
@@ -43,10 +38,7 @@ class AffectationToCollaborateurType extends AbstractType
             $form = $event->getForm();
 
             if ($affectation && $affectation->getDateDebut() && $affectation->getCollaborateur()) {
-                $isAffecte = $this->affectationRepository->isCollaborateurAffecte(
-                    $affectation->getCollaborateur(),
-                    $affectation->getDateDebut()
-                );
+                $isAffecte = $this->affectationRepository->isCollaborateurAffecte($affectation);
 
                 if ($isAffecte) {
                     $form->get('dateDebut')->addError(new FormError(

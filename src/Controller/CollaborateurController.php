@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Affectation;
 use App\Entity\Collaborateur;
+use App\Entity\CollaborateurFiltre;
 use App\Form\AffectationToCollaborateurType;
-use App\Form\AffectationToRestaurantType;
+use App\Form\CollaborateurFiltreType;
 use App\Form\CollaborateurType;
 use App\Repository\CollaborateurRepository;
 use App\Repository\UtilisateurRepository;
@@ -19,10 +20,15 @@ use Symfony\Component\Routing\Attribute\Route;
 final class CollaborateurController extends AbstractController
 {
     #[Route(name: 'app_collaborateur_index', methods: ['GET'])]
-    public function index(CollaborateurRepository $collaborateurRepository): Response
+    public function index(CollaborateurRepository $collaborateurRepository, Request $request): Response
     {
+        $filtre = new CollaborateurFiltre();
+        $form = $this->createForm(CollaborateurFiltreType::class, $filtre);
+        $form->handleRequest($request);
+
         return $this->render('collaborateur/index.html.twig', [
-            'collaborateurs' => $collaborateurRepository->findAll(),
+            'collaborateurs' => $collaborateurRepository->findAllWithFilter($filtre),
+            'form' => $form,
         ]);
     }
 
@@ -79,6 +85,7 @@ final class CollaborateurController extends AbstractController
         $affectationForm = $this->createForm(AffectationToCollaborateurType::class, $affectation);
 
         $form->handleRequest($request);
+        $affectationForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -97,14 +104,15 @@ final class CollaborateurController extends AbstractController
                 }
             }
 
-            return $this->redirectToRoute('app_collaborateur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_collaborateur_show', ['id' => $collaborateur->getId()], Response::HTTP_SEE_OTHER);
         }
 
         if ($affectationForm->isSubmitted() && $affectationForm->isValid()) {
             $affectation->setCollaborateur($collaborateur);
+            $entityManager->persist($affectation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_collaborateur_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_collaborateur_show', ['id' => $collaborateur->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('collaborateur/edit.html.twig', [

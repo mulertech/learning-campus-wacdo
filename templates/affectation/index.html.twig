@@ -5,6 +5,11 @@
 {% block body %}
     <h1>Recherche des affectations</h1>
 
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Filtrer') }}</button>
+    {{ form_end(form) }}
+    <br>
     <table class="table">
         <thead>
             <tr>

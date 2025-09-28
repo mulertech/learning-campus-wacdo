@@ -41,10 +41,15 @@ class AppFixtures extends Fixture
 
         $collaborateurs = [];
         for ($i = 0; $i < 300; $i++) {
+            $firstName = $faker->firstName();
+            $firstNameEmail = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $firstName));
+            $lastName = $faker->lastName();
+            $lastNameEmail = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $lastName));
+
             $collaborateur = new Collaborateur()
-                ->setPrenom($faker->firstName())
-                ->setNom($faker->lastName())
-                ->setEmail($faker->email())
+                ->setPrenom($firstName)
+                ->setNom($lastName)
+                ->setEmail($firstNameEmail . '.' . $lastNameEmail . '@example.com')
                 ->setDatePremiereEmbauche($faker->dateTimeBetween())
                 ->setAdministrateur(false);
 
@@ -54,12 +59,14 @@ class AppFixtures extends Fixture
         }
 
         foreach ($collaborateurs as $collaborateur) {
+            $debut = $faker->dateTimeBetween('-2 years');
+            $fin = $faker->randomElement([null, $faker->dateTimeBetween($debut, '+1 year')]);
             $affectation = new Affectation()
                 ->setCollaborateur($collaborateur)
                 ->setFonction($faker->randomElement($fonctions))
                 ->setRestaurant($faker->randomElement($restaurants))
-                ->setDateDebut($faker->dateTimeBetween('-2 years'))
-                ->setDateFin($faker->randomElement([null, $faker->dateTimeBetween('-1 year')]));
+                ->setDateDebut($debut)
+                ->setDateFin($fin);
 
             $manager->persist($affectation);
         }

@@ -24,6 +24,7 @@ class RestaurantRepository extends ServiceEntityRepository
             ->leftJoin('a.collaborateur', 'c')
             ->leftJoin('a.fonction', 'f')
             ->andWhere('r.id = :restaurantId')
+            ->andWhere('a.dateDebut <= CURRENT_DATE()')
             ->andWhere('a.dateFin IS NULL OR a.dateFin > CURRENT_DATE()')
             ->setParameter('restaurantId', $restaurantId)
             ->getQuery()
