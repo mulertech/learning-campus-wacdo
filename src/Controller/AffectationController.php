@@ -79,7 +79,11 @@ final class AffectationController extends AbstractController
             $entityManager->persist($affectation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_collaborateur_show', ['id' => $affectation->getCollaborateur()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'app_collaborateur_show',
+                ['id' => $affectation->getCollaborateur()->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('affectation/edit.html.twig', [

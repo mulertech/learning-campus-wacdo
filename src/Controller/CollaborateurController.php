@@ -89,19 +89,11 @@ final class CollaborateurController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $utilisateur = $utilisateurRepository->findOneByEmail($collaborateur->getEmail());
 
-            if ($collaborateur->isAdministrateur()) {
-                $utilisateur = $utilisateurRepository->findOneByEmail($collaborateur->getEmail());
-                if (null !== $utilisateur) {
-                    $utilisateur->setRoles(['ROLE_ADMIN']);
-                    $entityManager->flush();
-                }
-            } else {
-                $utilisateur = $utilisateurRepository->findOneByEmail($collaborateur->getEmail());
-                if (null !== $utilisateur) {
-                    $utilisateur->setRoles([]);
-                    $entityManager->flush();
-                }
+            if (null !== $utilisateur) {
+                $utilisateur->setRoles($collaborateur->isAdministrateur() ? ['ROLE_ADMIN'] : []);
+                $entityManager->flush();
             }
 
             return $this->redirectToRoute('app_collaborateur_show', ['id' => $collaborateur->getId()], Response::HTTP_SEE_OTHER);

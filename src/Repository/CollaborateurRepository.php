@@ -22,9 +22,7 @@ class CollaborateurRepository extends ServiceEntityRepository
         // Requête pour obtenir les collaborateurs avec leurs affectations actuelles
         $queryBuilder = $this->createQueryBuilder('c')
             ->leftJoin('c.affectations', 'a')
-            ->leftJoin('a.fonction', 'f')
-            ->andWhere('a.dateDebut <= CURRENT_DATE()')
-            ->andWhere('a.dateFin IS NULL OR a.dateFin > CURRENT_DATE()');
+            ->leftJoin('a.fonction', 'f');
 
 
         if ($collaborateurFiltre->getNom()) {
