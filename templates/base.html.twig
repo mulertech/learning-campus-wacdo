@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr_FR">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Wacdo{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><rect width=%22128%22 height=%22128%22 fill=%22%23064e3b%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2296%22 fill=%22%23fde047%22>W</text></svg>">
         {% block stylesheets %}
         {% endblock %}
 
@@ -12,6 +13,35 @@
         {% endblock %}
     </head>
     <body>
+        <div>
+            {% block header %}
+                <header>
+                    <nav class="menu nav flex items-stretch justify-between bg-green-900 text-yellow-300 mb-4">
+                        <a href="{{ path('app_home') }}" class="py-4 px-4 flex items-center hover:bg-yellow-300 hover:text-green-900 border-r border-gray-400{% if app.request.get('_route') == 'app_home' %} bg-yellow-300 text-green-900{% endif %}">Accueil</a>
+                        {% if app.user and is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('app_restaurant_index') }}" class="py-4 px-4 flex items-center hover:bg-yellow-300 hover:text-green-900 border-r border-gray-400{% if app.request.get('_route') starts with 'app_restaurant' %} bg-yellow-300 text-green-900{% endif %}">Gestion des restaurants</a>
+                            <a href="{{ path('app_collaborateur_index') }}" class="py-4 px-4 flex items-center hover:bg-yellow-300 hover:text-green-900 border-r border-gray-400{% if app.request.get('_route') starts with 'app_collaborateur' %} bg-yellow-300 text-green-900{% endif %}">Gestion des collaborateurs</a>
+                            <a href="{{ path('app_fonction_index') }}" class="py-4 px-4 flex items-center hover:bg-yellow-300 hover:text-green-900 border-r border-gray-400{% if app.request.get('_route') starts with 'app_fonction' %} bg-yellow-300 text-green-900{% endif %}">Gestion des fonctions</a>
+                            <a href="{{ path('app_affectation_index') }}" class="py-4 px-4 flex items-center hover:bg-yellow-300 hover:text-green-900 border-r border-gray-400 mr-16{% if app.request.get('_route') starts with 'app_affectation' %} bg-yellow-300 text-green-900{% endif %}">Recherche des affectations</a>
+                            <div class="flex ml-auto">
+                                <p class="py-4 px-4 flex items-center border-r border-gray-400">Bonjour, vous êtes connecté en tant que {{ app.user.email }}</p>
+                                <a href="{{ path('app_logout') }}" class="py-4 px-4 flex items-center hover:bg-yellow-300 hover:text-green-900">Se déconnecter</a>
+                            </div>
+                        {% elseif app.user %}
+                            <div class="flex ml-auto">
+                                <div class="py-4 px-4 flex items-center border-r border-gray-400">Bonjour, vous êtes connecté en tant que {{ app.user.email }}</div>
+                                <a href="{{ path('app_logout') }}" class="py-4 px-4 flex items-center hover:bg-yellow-300 hover:text-green-900">Se déconnecter</a>
+                            </div>
+                        {% else %}
+                            <div class="flex ml-auto">
+                                <a href="{{ path('app_login') }}" class="py-4 px-4 flex items-center hover:bg-yellow-300 hover:text-green-900 border-r border-gray-400">Se connecter</a>
+                                <a href="{{ path('app_register') }}" class="py-4 px-4 flex items-center hover:bg-yellow-300 hover:text-green-900">S'inscrire</a>
+                            </div>
+                        {% endif %}
+                    </nav>
+                </header>
+            {% endblock %}
+        </div>
         {% block body %}{% endblock %}
     </body>
 </html>

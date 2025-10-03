@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Affectation;
+use App\Entity\AffectationFiltre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,7 +17,7 @@ class AffectationRepository extends ServiceEntityRepository
         parent::__construct($registry, Affectation::class);
     }
 
-    public function findAllWithFilter($filter)
+    public function findAllWithFilter(AffectationFiltre $filter)
     {
         $queryBuilder = $this->createQueryBuilder('a')
             ->leftJoin('a.restaurant', 'r')

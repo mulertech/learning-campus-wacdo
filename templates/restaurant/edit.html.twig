@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Modifier le restaurant</h1>
 
-    {{ include('restaurant/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    <div class="flex items-center justify-center">
+        {{ include('restaurant/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    </div>
 
     <a href="{{ path('app_restaurant_index') }}">Retourner à la liste</a>
 

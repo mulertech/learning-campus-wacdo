@@ -17,7 +17,7 @@ class CollaborateurRepository extends ServiceEntityRepository
         parent::__construct($registry, Collaborateur::class);
     }
 
-    public function findAllWithFilter(CollaborateurFiltre $collaborateurFiltre): array
+    public function findAllWithFilter(CollaborateurFiltre $filter): array
     {
         // Requête pour obtenir les collaborateurs avec leurs affectations actuelles
         $queryBuilder = $this->createQueryBuilder('c')
@@ -25,16 +25,16 @@ class CollaborateurRepository extends ServiceEntityRepository
             ->leftJoin('a.fonction', 'f');
 
 
-        if ($collaborateurFiltre->getNom()) {
+        if ($filter->getNom()) {
             $queryBuilder
                 ->andWhere('LOWER(c.nom) LIKE :nom')
-                ->setParameter('nom', '%' . strtolower($collaborateurFiltre->getNom()) . '%');
+                ->setParameter('nom', '%' . strtolower($filter->getNom()) . '%');
         }
 
-        if ($collaborateurFiltre->getFonction()) {
+        if ($filter->getFonction()) {
             $queryBuilder
                 ->andWhere('f = :fonction')
-                ->setParameter('fonction', $collaborateurFiltre->getFonction());
+                ->setParameter('fonction', $filter->getFonction());
         }
 
         return $queryBuilder

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Restaurant;
+use App\Entity\RestaurantFiltre;
+use App\Form\RestaurantFiltreType;
 use App\Form\RestaurantType;
 use App\Repository\RestaurantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,10 +17,17 @@ use Symfony\Component\Routing\Attribute\Route;
 final class RestaurantController extends AbstractController
 {
     #[Route(name: 'app_restaurant_index', methods: ['GET'])]
-    public function index(RestaurantRepository $restaurantRepository): Response
+    public function index(RestaurantRepository $restaurantRepository, Request $request): Response
     {
+        $affectationFiltre = new RestaurantFiltre();
+        $form = $this->createForm(RestaurantFiltreType::class, $affectationFiltre);
+        $form->handleRequest($request);
+
+        $restaurants = $restaurantRepository->findAllWithFilter($affectationFiltre);
+
         return $this->render('restaurant/index.html.twig', [
-            'restaurants' => $restaurantRepository->findAll(),
+            'restaurants' => $restaurants,
+            'form' => $form,
         ]);
     }
 

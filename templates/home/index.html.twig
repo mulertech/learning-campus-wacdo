@@ -3,27 +3,11 @@
 {% block title %}Page d'accueil - Wacdo{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="text-xl">
-    <h1>Bienvenue chez Wacdo</h1>
-    {% if app.user and is_granted('ROLE_ADMIN') %}
-        <p>Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a></p>
-
-        <a href="{{ path('app_restaurant_index') }}">Gestion des restaurants</a>
-        <a href="{{ path('app_collaborateur_index') }}">Gestion des collaborateurs</a>
-        <a href="{{ path('app_fonction_index') }}">Gestion des fonctions</a>
-        <a href="{{ path('app_affectation_index') }}">Recherche des affectations</a>
-    {% elseif app.user %}
-        <p>Vous êtes connecté en tant que {{ app.user.userIdentifier }}, vous devez être administrateur pour naviguer sur ce site.</p>
-        <br>
-        <a href="{{ path('app_logout') }}">Se déconnecter</a>
-    {% else %}
-        <a href="{{ path('app_login') }}">Se connecter</a>
-        <a href="{{ path('app_register') }}">S'inscrire</a>
+    <h1 class="text-center text-5xl m-8 text-white"><span class="text-yellow-300">A</span>CCUEIL</h1>
+    {% if app.user and not is_granted('ROLE_ADMIN') %}
+        <h2 class="text-center text-2xl m-8">
+            Vous n'avez pas les droits pour accéder à la gestion des restaurants.
+        </h2>
     {% endif %}
-</div>
+<img src="{{ asset('images/Wacdo.webp') }}" alt="Image du restaurant Wacdo">
 {% endblock %}
