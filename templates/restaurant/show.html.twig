@@ -3,22 +3,22 @@
 {% block title %}Restaurant{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">R</span>estaurant</h1>
+    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">R</span>ESTAURANT</h1>
 
-    <table class="table">
-        <thead>
+    <table class="relative mx-auto overflow-hidden my-4 rounded-xl shadow-xl">
+        <thead class="text-md text-gray-700 uppercase bg-gray-200">
             <tr>
-                <th>Nom</th>
-                <th>Adresse</th>
-                <th>CodePostal</th>
-                <th>Ville</th>
+                <th class="px-6 py-3">Nom</th>
+                <th class="px-6 py-3">Adresse</th>
+                <th class="px-6 py-3">CodePostal</th>
+                <th class="px-6 py-3">Ville</th>
             </tr>
         <tbody>
-            <tr>
-                <td>{{ restaurant.nom }}</td>
-                <td>{{ restaurant.adresse }}</td>
-                <td>{{ restaurant.codePostal }}</td>
-                <td>{{ restaurant.ville }}</td>
+            <tr class="bg-white border-b border-gray-200">
+                <td class="px-6 py-4">{{ restaurant.nom }}</td>
+                <td class="px-6 py-4">{{ restaurant.adresse }}</td>
+                <td class="px-6 py-4">{{ restaurant.codePostal }}</td>
+                <td class="px-6 py-4">{{ restaurant.ville }}</td>
             </tr>
         </tbody>
     </table>
@@ -28,35 +28,36 @@
     </a>
     <br>
     <h2 class="text-center text-2xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">L</span>iste des collaborateurs</h2>
-    <table class="table">
-        <thead>
+
+    <table class="relative overflow-x-auto w-full my-4">
+        <thead class="text-md text-gray-700 uppercase bg-gray-200">
             <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Poste</th>
-                <th>Date de début</th>
-                <th>Date de fin</th>
-                <th>Actions</th>
+                <th class="px-6 py-3">Prénom</th>
+                <th class="px-6 py-3">Nom</th>
+                <th class="px-6 py-3">Email</th>
+                <th class="px-6 py-3">Poste</th>
+                <th class="px-6 py-3">Date de début</th>
+                <th class="px-6 py-3">Date de fin</th>
+                <th class="px-6 py-3">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for affectation in affectations %}
-                <tr>
-                    <td>{{ affectation.prenom }}</td>
-                    <td>{{ affectation.nom }}</td>
-                    <td>{{ affectation.email }}</td>
-                    <td>{{ affectation.intitule }}</td>
-                    <td>{{ affectation.dateDebut|date('d/m/Y') }}</td>
-                    <td>{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
-                    <td>
+                <tr class="bg-white border-b border-gray-200">
+                    <td class="px-6 py-4">{{ affectation.prenom }}</td>
+                    <td class="px-6 py-4">{{ affectation.nom }}</td>
+                    <td class="px-6 py-4">{{ affectation.email }}</td>
+                    <td class="px-6 py-4">{{ affectation.intitule }}</td>
+                    <td class="px-6 py-4">{{ affectation.dateDebut|date('d/m/Y') }}</td>
+                    <td class="px-6 py-4">{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
+                    <td class="px-6 py-4">
                         {% if (not affectation.dateFin) or (affectation.dateFin > date()) %}
-                            <a href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">Modifier</a>
+                            <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">Modifier</a>
                         {% endif %}
                     </td>
                 </tr>
             {% else %}
-                <tr>
+                <tr class="bg-white border-b border-gray-200">
                     <td colspan="5">Pas de collaborateurs</td>
                 </tr>
             {% endfor %}

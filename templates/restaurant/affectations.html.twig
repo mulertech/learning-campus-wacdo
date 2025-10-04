@@ -3,32 +3,32 @@
 {% block title %}Affectations de ce restaurant{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">A</span>ffectations du restaurant {{ restaurant.nom }}</h1>
+    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">A</span>FFECTATIONS DU RESTAURANT {{ restaurant.nom|upper }}</h1>
 
-    <table class="table">
-        <thead>
+    <table class="relative overflow-x-auto w-full my-4">
+        <thead class="text-md text-gray-700 uppercase bg-gray-200">
             <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Poste</th>
-                <th>Date de début</th>
-                <th>Date de fin</th>
+                <th class="px-6 py-3">Prénom</th>
+                <th class="px-6 py-3">Nom</th>
+                <th class="px-6 py-3">Email</th>
+                <th class="px-6 py-3">Poste</th>
+                <th class="px-6 py-3">Date de début</th>
+                <th class="px-6 py-3">Date de fin</th>
             </tr>
         </thead>
         <tbody>
         {% for affectation in restaurant.affectations %}
-            <tr>
-                <td>{{ affectation.collaborateur.prenom }}</td>
-                <td>{{ affectation.collaborateur.nom }}</td>
-                <td>{{ affectation.collaborateur.email }}</td>
-                <td>{{ affectation.fonction.intitule }}</td>
-                <td>{{ affectation.dateDebut|date('d/m/Y') }}</td>
-                <td>{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
+            <tr class="bg-white border-b border-gray-200">
+                <td class="px-6 py-4">{{ affectation.collaborateur.prenom }}</td>
+                <td class="px-6 py-4">{{ affectation.collaborateur.nom }}</td>
+                <td class="px-6 py-4">{{ affectation.collaborateur.email }}</td>
+                <td class="px-6 py-4">{{ affectation.fonction.intitule }}</td>
+                <td class="px-6 py-4">{{ affectation.dateDebut|date('d/m/Y') }}</td>
+                <td class="px-6 py-4">{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
             </tr>
         {% else %}
-            <tr>
-                <td colspan="4">Pas d'affectations</td>
+            <tr class="bg-white border-b border-gray-200">
+                <td class="px-6 py-4" colspan="4">Pas d'affectations</td>
             </tr>
         {% endfor %}
         </tbody>

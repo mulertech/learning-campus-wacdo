@@ -7,33 +7,33 @@
 
     <a href="{{ path('app_collaborateur_index') }}">Collaborateurs affectés</a>
     <br>
-    <table class="table">
-        <thead>
+    <table class="relative overflow-x-auto w-full my-4">
+        <thead class="text-md text-gray-700 uppercase bg-gray-200">
             <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Date de première embauche</th>
-                <th>Administrateur</th>
-                <th>actions</th>
+                <th class="px-6 py-3">Prénom</th>
+                <th class="px-6 py-3">Nom</th>
+                <th class="px-6 py-3">Email</th>
+                <th class="px-6 py-3">Date de première embauche</th>
+                <th class="px-6 py-3">Administrateur</th>
+                <th class="px-6 py-3">actions</th>
             </tr>
         </thead>
         <tbody>
         {% for collaborateur in collaborateurs %}
-            <tr>
-                <td>{{ collaborateur.prenom }}</td>
-                <td>{{ collaborateur.nom }}</td>
-                <td>{{ collaborateur.email }}</td>
-                <td>{{ collaborateur.datePremiereEmbauche|date('d/m/Y') }}</td>
-                <td>{{ collaborateur.administrateur ? 'Oui' : 'Non' }}</td>
-                <td>
-                    <a href="{{ path('app_collaborateur_show', {'id': collaborateur.id}) }}">Détail</a>
-                    <a href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}">Modifier</a>
+            <tr class="bg-white border-b border-gray-200">
+                <td class="px-6 py-4">{{ collaborateur.prenom }}</td>
+                <td class="px-6 py-4">{{ collaborateur.nom }}</td>
+                <td class="px-6 py-4">{{ collaborateur.email }}</td>
+                <td class="px-6 py-4">{{ collaborateur.datePremiereEmbauche|date('d/m/Y') }}</td>
+                <td class="px-6 py-4">{{ collaborateur.administrateur ? 'Oui' : 'Non' }}</td>
+                <td class="px-6 py-4">
+                    <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_collaborateur_show', {'id': collaborateur.id}) }}">Détail</a>
+                    <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
-            <tr>
-                <td colspan="8">Pas de collaborateur</td>
+            <tr class="bg-white border-b border-gray-200">
+                <td class="px-6 py-4" colspan="8">Pas de collaborateur</td>
             </tr>
         {% endfor %}
         </tbody>
