@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\RestaurantFiltre;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,6 +16,7 @@ class RestaurantFiltreType extends AbstractType
             ->add('nom')
             ->add('codePostal')
             ->add('ville')
+            ->add('submit', SubmitType::class, ['label' => 'Enregistrer'])
         ;
     }
 

@@ -77,7 +77,7 @@ class AffectationRepository extends ServiceEntityRepository
         }
 
         if ($filter->getDebut()) {
-            $queryBuilder->andWhere('a.dateFin >= :debut OR a.dateFin IS NULL')
+            $queryBuilder->andWhere('a.dateDebut = :debut')
                 ->setParameter('debut', $filter->getDebut());
         }
 

@@ -15,33 +15,22 @@
             {{ form_widget(form.nom, {
                 attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
             }) }}
-            <div class="text-red-600 text-sm">
-                {{ form_errors(form.nom) }}
-            </div>
-            {{ form_label(form.codePostal, 'Code postal', {
+            {{ form_label(form.codePostal, 'Code postal :', {
                 label_attr: { class: 'flex font-semibold text-lg mx-2' }
             }) }}
             {{ form_widget(form.codePostal, {
                 attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
             }) }}
-            <div class="text-red-600 text-sm">
-                {{ form_errors(form.codePostal) }}
-            </div>
-            {{ form_label(form.ville, 'Ville', {
+            {{ form_label(form.ville, 'Ville :', {
                 label_attr: { class: 'flex font-semibold text-lg mx-2' }
             }) }}
             {{ form_widget(form.ville, {
                 attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
             }) }}
-            <div class="text-red-600 text-sm">
-                {{ form_errors(form.ville) }}
-            </div>
-
-            <div class="md:col-span-2 text-red-600 text-sm mt-4">
-                {{ form_errors(form) }}
-            </div>
-
-            <button type="submit" class="flex px-2 items-center bg-blue-600 rounded-r-xl font-semibold text-lg text-blue-100 hover:bg-blue-700 border border-gray-400">Rechercher</button>
+            {{ form_row(form.submit, {
+                label: 'Rechercher',
+                attr: { class: 'flex px-2 items-center bg-blue-600 rounded-r-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
+            }) }}
         {{ form_end(form) }}
     </div>
 

@@ -5,10 +5,28 @@
 {% block body %}
     <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">G</span>ESTION DES COLLABORATEURS</h1>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Filtrer') }}</button>
-    {{ form_end(form) }}
+    <div class="flex items-center justify-center">
+        {{ form_start(form, {
+            attr: { class: 'flex bg-white rounded-xl shadow-lg border border-gray-400' }
+        }) }}
+            {{ form_label(form.nom, 'Nom :', {
+                label_attr: { class: 'flex font-semibold text-lg mx-2' }
+            }) }}
+            {{ form_widget(form.nom, {
+                attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
+            }) }}
+            {{ form_label(form.fonction, 'Fonction :', {
+                label_attr: { class: 'flex font-semibold text-lg mx-2' }
+            }) }}
+            {{ form_widget(form.fonction, {
+                attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
+            }) }}
+            {{ form_row(form.submit, {
+                label: 'Rechercher',
+                attr: { class: 'flex px-2 items-center bg-blue-600 rounded-r-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
+            }) }}
+        {{ form_end(form) }}
+    </div>
 
     <a href="{{ path('app_collaborateur_without_affectation') }}">Collaborateurs non affectés</a>
     <br>

@@ -8,6 +8,7 @@ use App\Entity\Restaurant;
 use App\Repository\AffectationRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
@@ -35,6 +36,7 @@ class AffectationToCollaborateurType extends AbstractType
                 'class' => Restaurant::class,
                 'choice_label' => 'nom',
             ])
+            ->add('submit', SubmitType::class, ['label' => 'Enregistrer'])
         ;
 
         // Vérifier si le collaborateur est déjà affecté à la même période

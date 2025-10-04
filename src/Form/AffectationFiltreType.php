@@ -8,6 +8,7 @@ use App\Entity\Restaurant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -36,6 +37,7 @@ class AffectationFiltreType extends AbstractType
                 'required' => false,
                 'label' => 'Fonction'
             ])
+            ->add('submit', SubmitType::class, ['label' => 'Enregistrer'])
         ;
     }
 
