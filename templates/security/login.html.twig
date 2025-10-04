@@ -8,13 +8,13 @@
                 Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
             </div>
         {% else %}
-            <h1 class="text-center text-5xl m-8 text-white"><span class="text-yellow-300">S</span>E CONNECTER</h1>
+            <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">S</span>E CONNECTER</h1>
             <div class="grid items-center justify-center">
                 <form method="post" class="grid md:grid-cols-2 bg-white rounded-xl shadow-lg p-12 mt-12">
                     <label class="col-span-1 font-semibold text-lg my-auto" for="username">Email</label>
-                    <input class="col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded" type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>
+                    <input class="col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl" type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>
                     <label class="col-span-1 font-semibold text-lg my-auto mt-3" for="password">Mot de passe</label>
-                    <input class="col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded" type="password" name="_password" id="password" autocomplete="current-password" required>
+                    <input class="col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl" type="password" name="_password" id="password" autocomplete="current-password" required>
                     <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
 
                     {#
@@ -31,7 +31,7 @@
                         <div class="col-span-1 md:col-span-2 text-red-500 mt-4">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                     {% endif %}
 
-                    <button class="col-span-1 md:col-span-2 items-center h-12 bg-blue-600 mt-8 rounded font-semibold text-lg text-blue-100 hover:bg-blue-700" type="submit">
+                    <button class="col-span-1 md:col-span-2 items-center h-12 bg-blue-600 mt-8 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700" type="submit">
                         Connexion
                     </button>
                 </form>

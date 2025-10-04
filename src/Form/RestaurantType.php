@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Restaurant;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,6 +17,7 @@ class RestaurantType extends AbstractType
             ->add('adresse')
             ->add('codePostal')
             ->add('ville')
+            ->add('submit', SubmitType::class, ['label' => 'Enregistrer'])
         ;
     }
 

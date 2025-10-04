@@ -3,7 +3,7 @@
 {% block title %}Gestion des restaurants{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-5xl m-8 text-white"><span class="text-yellow-300">G</span>ESTION DES RESTAURANTS</h1>
+    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">G</span>ESTION DES RESTAURANTS</h1>
 
     <div class="flex items-center justify-center">
         {{ form_start(form, {
@@ -46,7 +46,7 @@
     </div>
 
     <table class="relative overflow-x-auto w-full my-4">
-        <thead class="text-md text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+        <thead class="text-md text-gray-700 uppercase bg-gray-200">
             <tr>
                 <th class="px-6 py-3">Nom</th>
                 <th class="px-6 py-3">Adresse</th>
@@ -57,23 +57,23 @@
         </thead>
         <tbody>
         {% for restaurant in restaurants %}
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+            <tr class="bg-white border-b border-gray-200">
                 <td class="px-6 py-4">{{ restaurant.nom }}</td>
                 <td class="px-6 py-4">{{ restaurant.adresse }}</td>
                 <td class="px-6 py-4">{{ restaurant.codePostal }}</td>
                 <td class="px-6 py-4">{{ restaurant.ville }}</td>
                 <td class="px-6 py-4">
-                    <a class="px-2 items-center bg-blue-600 rounded font-semibold text-md text-blue-100 hover:bg-blue-700" href="{{ path('app_restaurant_show', {'id': restaurant.id}) }}">Détail du restaurant</a>
-                    <a class="px-2 items-center bg-blue-600 rounded font-semibold text-md text-blue-100 hover:bg-blue-700" href="{{ path('app_restaurant_edit', {'id': restaurant.id}) }}">Modifier un restaurant</a>
+                    <a class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-md text-blue-100 hover:bg-blue-700" href="{{ path('app_restaurant_show', {'id': restaurant.id}) }}">Détail du restaurant</a>
+                    <a class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-md text-blue-100 hover:bg-blue-700" href="{{ path('app_restaurant_edit', {'id': restaurant.id}) }}">Modifier un restaurant</a>
                 </td>
             </tr>
         {% else %}
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+            <tr class="bg-white border-b border-gray-200">
                 <td class="px-6 py-4" colspan="6">Pas de restaurant</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_restaurant_new') }}" class="px-2 items-center bg-blue-600 rounded font-semibold text-lg text-blue-100 hover:bg-blue-700">Créer un nouveau restaurant</a>
+    <a href="{{ path('app_restaurant_new') }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">Créer un nouveau restaurant</a>
 {% endblock %}

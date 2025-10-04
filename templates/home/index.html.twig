@@ -3,7 +3,7 @@
 {% block title %}Page d'accueil - Wacdo{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-5xl m-8 text-white"><span class="text-yellow-300">A</span>CCUEIL</h1>
+    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">A</span>CCUEIL</h1>
     {% if app.user and not is_granted('ROLE_ADMIN') %}
         <h2 class="text-center text-2xl m-8">
             Vous n'avez pas les droits pour accéder à la gestion des restaurants.

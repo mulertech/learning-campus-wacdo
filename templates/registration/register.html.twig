@@ -3,7 +3,7 @@
 {% block title %}Inscription - Wacdo{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-5xl m-8 text-white"><span class="text-yellow-300">S</span>'INSCRIRE</h1>
+    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">S</span>'INSCRIRE</h1>
 
 
 <div class="grid items-center justify-center">
@@ -14,7 +14,7 @@
             label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
         }) }}
         {{ form_widget(registrationForm.email, {
-            attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded' }
+            attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
         }) }}
         <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
             {{ form_errors(registrationForm.email) }}
@@ -23,7 +23,7 @@
             label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
         }) }}
         {{ form_widget(registrationForm.plainPassword, {
-            attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded' }
+            attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
         }) }}
         <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
             {{ form_errors(registrationForm.plainPassword) }}
@@ -32,7 +32,7 @@
             label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
         }) }}
         {{ form_widget(registrationForm.agreeTerms, {
-            attr: { class: 'col-span-1 px-4 w-64 h-6 bg-gray-200 mt-2 rounded' }
+            attr: { class: 'col-span-1 px-4 w-64 h-6 bg-gray-200 mt-2 rounded-xl' }
         }) }}
         <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
             {{ form_errors(registrationForm.agreeTerms) }}
@@ -42,7 +42,7 @@
             {{ form_errors(registrationForm) }}
         </div>
 
-        <button type="submit" class="col-span-1 md:col-span-2 items-center h-12 bg-blue-600 mt-8 rounded font-semibold text-lg text-blue-100 hover:bg-blue-700">S'inscrire</button>
+        <button type="submit" class="col-span-1 md:col-span-2 items-center h-12 bg-blue-600 mt-8 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">S'inscrire</button>
     {{ form_end(registrationForm) }}
 </div>
 
