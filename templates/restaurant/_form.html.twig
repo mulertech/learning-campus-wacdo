@@ -44,7 +44,7 @@
 
     <div class="col-span-1 md:col-span-2">
         {{ form_row(form.submit, {
-            'label': 'Enregistrer',
+            'label': button_label|default('Enregistrer'),
             'attr': { class: 'w-full items-center h-12 bg-blue-600 mt-8 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
         }) }}
     </div>

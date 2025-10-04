@@ -72,7 +72,7 @@ class AffectationRepository extends ServiceEntityRepository
 
         if ($affectation->getId()) {
             // Exclude the current affectation if it already exists in the database
-            $qb->andWhere('a != :affection')
+            $qb->andWhere('a != :affectation')
                 ->setParameter('affectation', $affectation);
         }
 

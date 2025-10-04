@@ -47,7 +47,11 @@ final class AffectationController extends AbstractController
             $entityManager->persist($affectation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_affectation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'app_affectations_restaurant',
+                ['id' => $restaurant->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('affectation/new.html.twig', [
@@ -76,14 +80,9 @@ final class AffectationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($affectation);
             $entityManager->flush();
 
-            return $this->redirectToRoute(
-                'app_collaborateur_show',
-                ['id' => $affectation->getCollaborateur()->getId()],
-                Response::HTTP_SEE_OTHER
-            );
+            return $this->redirectToRoute('app_affectation_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('affectation/edit.html.twig', [
