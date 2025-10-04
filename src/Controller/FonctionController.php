@@ -43,14 +43,6 @@ final class FonctionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_fonction_show', methods: ['GET'])]
-    public function show(Fonction $fonction): Response
-    {
-        return $this->render('fonction/show.html.twig', [
-            'fonction' => $fonction,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_fonction_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Fonction $fonction, EntityManagerInterface $entityManager): Response
     {

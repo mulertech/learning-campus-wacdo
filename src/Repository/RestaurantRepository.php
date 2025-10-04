@@ -50,7 +50,7 @@ class RestaurantRepository extends ServiceEntityRepository
     public function findCurrentAffectations($restaurantId)
     {
         return $this->createQueryBuilder('r')
-            ->select('c.nom, c.prenom, c.email, f.intitule, a.dateDebut, a.dateFin')
+            ->select('a.id, c.nom, c.prenom, c.email, f.intitule, a.dateDebut, a.dateFin')
             ->leftJoin('r.affectations', 'a')
             ->leftJoin('a.collaborateur', 'c')
             ->leftJoin('a.fonction', 'f')

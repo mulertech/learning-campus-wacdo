@@ -62,14 +62,6 @@ final class AffectationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_affectation_show', methods: ['GET'])]
-    public function show(Affectation $affectation): Response
-    {
-        return $this->render('affectation/show.html.twig', [
-            'affectation' => $affectation,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_affectation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Affectation $affectation, EntityManagerInterface $entityManager): Response
     {
@@ -85,7 +77,11 @@ final class AffectationController extends AbstractController
 
             $this->addFlash('success', 'L\'affectation a bien été modifiée.');
 
-            return $this->redirectToRoute('app_affectation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'app_restaurant_show',
+                ['id' => $affectation->getRestaurant()?->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('affectation/edit.html.twig', [

@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Affectation;
 use App\Entity\AffectationFiltre;
+use App\Entity\Collaborateur;
+use App\Entity\CollaborateurAffectationFiltre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -53,6 +55,34 @@ class AffectationRepository extends ServiceEntityRepository
         return $queryBuilder
             ->orderBy('c.nom', 'ASC')
             ->addOrderBy('c.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByCollaborateurWithFilter(
+        CollaborateurAffectationFiltre $filter,
+        Collaborateur $collaborateur
+    ): array {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->leftJoin('a.fonction', 'f')
+            ->leftJoin('a.restaurant', 'r')
+            ->addSelect('f', 'r')
+            ->andWhere('a.collaborateur = :collaborateur')
+            ->setParameter('collaborateur', $collaborateur);
+
+        if ($filter->getFonction()) {
+            $queryBuilder
+                ->andWhere('f = :fonction')
+                ->setParameter('fonction', $filter->getFonction());
+        }
+
+        if ($filter->getDebut()) {
+            $queryBuilder->andWhere('a.dateFin >= :debut OR a.dateFin IS NULL')
+                ->setParameter('debut', $filter->getDebut());
+        }
+
+        return $queryBuilder
+            ->orderBy('a.dateDebut', 'DESC')
             ->getQuery()
             ->getResult();
     }

@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Affectation;
 use App\Entity\Collaborateur;
+use App\Entity\CollaborateurAffectationFiltre;
 use App\Entity\CollaborateurFiltre;
 use App\Form\AffectationToCollaborateurType;
+use App\Form\CollaborateurAffectationFiltreType;
 use App\Form\CollaborateurFiltreType;
 use App\Form\CollaborateurType;
+use App\Repository\AffectationRepository;
 use App\Repository\CollaborateurRepository;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,6 +32,14 @@ final class CollaborateurController extends AbstractController
         return $this->render('collaborateur/index.html.twig', [
             'collaborateurs' => $collaborateurRepository->findAllWithFilter($filtre),
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/collaborateur-sans-affectation', name: 'app_collaborateur_without_affectation', methods: ['GET'])]
+    public function indexWithoutAffectation(CollaborateurRepository $collaborateurRepository): Response
+    {
+        return $this->render('collaborateur/index_without_affectation.html.twig', [
+            'collaborateurs' => $collaborateurRepository->findAllWithoutAffectation(),
         ]);
     }
 
@@ -71,10 +82,24 @@ final class CollaborateurController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_collaborateur_show', methods: ['GET'])]
-    public function show(Collaborateur $collaborateur): Response
-    {
+    public function show(
+        Collaborateur $collaborateur,
+        Request $request,
+        AffectationRepository $affectationRepository
+    ): Response {
+        $collaborateurAffectationFiltre = new CollaborateurAffectationFiltre();
+        $form = $this->createForm(CollaborateurAffectationFiltreType::class, $collaborateurAffectationFiltre);
+        $form->handleRequest($request);
+
+        $affectations = $affectationRepository->findByCollaborateurWithFilter(
+            $collaborateurAffectationFiltre,
+            $collaborateur
+        );
+
         return $this->render('collaborateur/show.html.twig', [
             'collaborateur' => $collaborateur,
+            'form' => $form,
+            'affectations' => $affectations,
         ]);
     }
 
@@ -88,6 +113,7 @@ final class CollaborateurController extends AbstractController
         $form = $this->createForm(CollaborateurType::class, $collaborateur);
 
         $affectation = new Affectation();
+        $affectation->setCollaborateur($collaborateur);
         $affectationForm = $this->createForm(AffectationToCollaborateurType::class, $affectation);
 
         $form->handleRequest($request);
@@ -115,7 +141,6 @@ final class CollaborateurController extends AbstractController
         }
 
         if ($affectationForm->isSubmitted() && $affectationForm->isValid()) {
-            $affectation->setCollaborateur($collaborateur);
             $entityManager->persist($affectation);
             $entityManager->flush();
 

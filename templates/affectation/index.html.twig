@@ -19,7 +19,6 @@
                 <th>Ville</th>
                 <th>Date de début</th>
                 <th>Date de fin</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -31,12 +30,6 @@
                 <td>{{ affectation.restaurant.ville }}</td>
                 <td>{{ affectation.dateDebut|date('d/m/Y') }}</td>
                 <td>{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_affectation_show', {'id': affectation.id}) }}">Détail</a>
-                    {% if (not affectation.dateFin) or (affectation.dateFin > date()) %}
-                        <a href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">Modifier</a>
-                    {% endif %}
-                </td>
             </tr>
         {% else %}
             <tr>

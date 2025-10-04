@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Collaborateur;
+use App\Entity\CollaborateurAffectationFiltre;
 use App\Entity\CollaborateurFiltre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,8 +22,15 @@ class CollaborateurRepository extends ServiceEntityRepository
     {
         // Requête pour obtenir les collaborateurs avec leurs affectations actuelles
         $queryBuilder = $this->createQueryBuilder('c')
-            ->leftJoin('c.affectations', 'a')
-            ->leftJoin('a.fonction', 'f');
+            ->leftJoin(
+                'c.affectations',
+                'a',
+                'WITH',
+                'a.dateFin IS NULL OR a.dateFin >= CURRENT_DATE()'
+            )
+            ->leftJoin('a.fonction', 'f')
+            ->addSelect('a', 'f')
+            ->where('f IS NOT NULL');
 
 
         if ($filter->getNom()) {
@@ -36,6 +44,29 @@ class CollaborateurRepository extends ServiceEntityRepository
                 ->andWhere('f = :fonction')
                 ->setParameter('fonction', $filter->getFonction());
         }
+
+        return $queryBuilder
+            ->orderBy('c.nom', 'ASC')
+            ->addOrderBy('c.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+    public function findAllWithoutAffectation(): array
+    {
+        // Requête pour obtenir les collaborateurs avec leurs affectations actuelles
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->leftJoin(
+                'c.affectations',
+                'a',
+                'WITH',
+                'a.dateFin IS NULL OR a.dateFin >= CURRENT_DATE()'
+            )
+            ->leftJoin('a.fonction', 'f')
+            ->addSelect('a', 'f')
+            ->where('f IS NULL');
 
         return $queryBuilder
             ->orderBy('c.nom', 'ASC')

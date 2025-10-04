@@ -9,16 +9,15 @@
         <thead>
             <tr>
                 <th>Intitulé</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for fonction in fonctions %}
             <tr>
-                <td>{{ fonction.intitule }}</td>
                 <td>
-                    <a href="{{ path('app_fonction_show', {'id': fonction.id}) }}">Détail</a>
-                    <a href="{{ path('app_fonction_edit', {'id': fonction.id}) }}">Modifier</a>
+                    <a href="{{ path('app_fonction_edit', {'id': fonction.id}) }}">
+                        {{ fonction.intitule }}
+                    </a>
                 </td>
             </tr>
         {% else %}

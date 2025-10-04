@@ -26,7 +26,13 @@
         </tbody>
     </table>
 
-    <h2>Liste des affectations</h2>
+    <h2 class="text-center text-2xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">L</span>iste des affectations</h2>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Filtrer') }}</button>
+    {{ form_end(form) }}
+
     <table class="table">
         <thead>
         <tr>
@@ -39,7 +45,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for affectation in collaborateur.affectations %}
+        {% for affectation in affectations %}
             <tr>
                 <td>{{ affectation.fonction.intitule }}</td>
                 <td>{{ affectation.restaurant.nom }}</td>
@@ -47,7 +53,6 @@
                 <td>{{ affectation.dateDebut|date('d/m/Y') }}</td>
                 <td>{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_affectation_show', {'id': affectation.id}) }}">Détail</a>
                     {% if not affectation.dateFin %}
                         <a href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">Modifier</a>
                     {% endif %}

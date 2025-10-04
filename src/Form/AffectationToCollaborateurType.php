@@ -43,10 +43,7 @@ class AffectationToCollaborateurType extends AbstractType
             $form = $event->getForm();
 
             if ($affectation && $affectation->getDateDebut() && $affectation->getCollaborateur()) {
-                $isAffecte = $this->affectationRepository->isCollaborateurAffecte(
-                    $affectation->getCollaborateur(),
-                    $affectation->getDateDebut()
-                );
+                $isAffecte = $this->affectationRepository->isCollaborateurAffecte($affectation);
 
                 if ($isAffecte) {
                     $form->get('dateDebut')->addError(new FormError(

@@ -1,16 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des collaborateurs{% endblock %}
+{% block title %}Collaborateurs sans affectation{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">G</span>ESTION DES COLLABORATEURS</h1>
+    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">C</span>OLLABORATEURS SANS AFFECTATION</h1>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Filtrer') }}</button>
-    {{ form_end(form) }}
-
-    <a href="{{ path('app_collaborateur_without_affectation') }}">Collaborateurs non affectés</a>
+    <a href="{{ path('app_collaborateur_index') }}">Collaborateurs affectés</a>
     <br>
     <table class="table">
         <thead>
