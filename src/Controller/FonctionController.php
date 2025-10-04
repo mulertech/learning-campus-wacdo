@@ -33,6 +33,8 @@ final class FonctionController extends AbstractController
             $entityManager->persist($fonction);
             $entityManager->flush();
 
+            $this->addFlash('success', 'La fonction a bien été créée.');
+
             return $this->redirectToRoute('app_fonction_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -59,6 +61,8 @@ final class FonctionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'La fonction a bien été modifiée.');
+
             return $this->redirectToRoute('app_fonction_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -74,6 +78,8 @@ final class FonctionController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$fonction->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($fonction);
             $entityManager->flush();
+
+            $this->addFlash('success', 'La fonction a bien été supprimée.');
         }
 
         return $this->redirectToRoute('app_fonction_index', [], Response::HTTP_SEE_OTHER);

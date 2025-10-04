@@ -1,0 +1,5 @@
+{% for type, messages in app.flashes %}
+    <div class="text-center text-white text-xl {{ type == 'success' ? 'bg-green-500' : 'bg-red-500' }} p-4 mb-4">
+        {{ messages|join('<br>')|raw }}
+    </div>
+{% endfor %}

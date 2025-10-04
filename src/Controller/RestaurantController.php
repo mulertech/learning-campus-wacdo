@@ -42,6 +42,8 @@ final class RestaurantController extends AbstractController
             $entityManager->persist($restaurant);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Le restaurant a bien été créé.');
+
             return $this->redirectToRoute('app_restaurant_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -71,6 +73,8 @@ final class RestaurantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Le restaurant a bien été modifié.');
+
             return $this->redirectToRoute('app_restaurant_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -86,6 +90,8 @@ final class RestaurantController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$restaurant->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($restaurant);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Le restaurant a bien été supprimé.');
         }
 
         return $this->redirectToRoute('app_restaurant_index', [], Response::HTTP_SEE_OTHER);

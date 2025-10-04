@@ -47,6 +47,8 @@ final class AffectationController extends AbstractController
             $entityManager->persist($affectation);
             $entityManager->flush();
 
+            $this->addFlash('success', 'L\'affectation a bien été créée.');
+
             return $this->redirectToRoute(
                 'app_affectations_restaurant',
                 ['id' => $restaurant->getId()],
@@ -82,6 +84,8 @@ final class AffectationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'L\'affectation a bien été modifiée.');
+
             return $this->redirectToRoute('app_affectation_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -97,6 +101,8 @@ final class AffectationController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$affectation->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($affectation);
             $entityManager->flush();
+
+            $this->addFlash('success', 'L\'affectation a bien été supprimée.');
         }
 
         return $this->redirectToRoute('app_affectation_index', [], Response::HTTP_SEE_OTHER);

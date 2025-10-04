@@ -46,11 +46,18 @@ final class CollaborateurController extends AbstractController
             $entityManager->persist($collaborateur);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Le collaborateur a bien été créé.');
+
             if ($collaborateur->isAdministrateur()) {
                 $utilisateur = $utilisateurRepository->findOneByEmail($collaborateur->getEmail());
                 if (null !== $utilisateur) {
                     $utilisateur->setRoles(['ROLE_ADMIN']);
                     $entityManager->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'L\'utilisateur correspondant a bien été défini comme administrateur.'
+                    );
                 }
             }
 
@@ -89,11 +96,20 @@ final class CollaborateurController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+            $this->addFlash('success', 'Le collaborateur a bien été modifié.');
+
             $utilisateur = $utilisateurRepository->findOneByEmail($collaborateur->getEmail());
 
             if (null !== $utilisateur) {
                 $utilisateur->setRoles($collaborateur->isAdministrateur() ? ['ROLE_ADMIN'] : []);
                 $entityManager->flush();
+
+                $role = $collaborateur->isAdministrateur() ? 'administrateur' : 'utilisateur standard';
+                $this->addFlash(
+                    'success',
+                    'L\'utilisateur correspondant existe et est actuellement défini comme ' . $role . '.'
+                );
             }
 
             return $this->redirectToRoute('app_collaborateur_show', ['id' => $collaborateur->getId()], Response::HTTP_SEE_OTHER);
@@ -103,6 +119,8 @@ final class CollaborateurController extends AbstractController
             $affectation->setCollaborateur($collaborateur);
             $entityManager->persist($affectation);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Le collaborateur a bien été affecté au restaurant.');
 
             return $this->redirectToRoute('app_collaborateur_show', ['id' => $collaborateur->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -120,6 +138,8 @@ final class CollaborateurController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$collaborateur->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($collaborateur);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Le collaborateur a bien été supprimé.');
         }
 
         return $this->redirectToRoute('app_collaborateur_index', [], Response::HTTP_SEE_OTHER);
