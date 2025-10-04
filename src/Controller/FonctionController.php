@@ -39,7 +39,6 @@ final class FonctionController extends AbstractController
         }
 
         return $this->render('fonction/new.html.twig', [
-            'fonction' => $fonction,
             'form' => $form,
         ]);
     }

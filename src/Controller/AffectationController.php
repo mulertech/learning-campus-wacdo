@@ -57,7 +57,6 @@ final class AffectationController extends AbstractController
         }
 
         return $this->render('affectation/new.html.twig', [
-            'affectation' => $affectation,
             'form' => $form,
             'restaurant' => $restaurant,
         ]);

@@ -48,7 +48,6 @@ final class RestaurantController extends AbstractController
         }
 
         return $this->render('restaurant/new.html.twig', [
-            'restaurant' => $restaurant,
             'form' => $form,
         ]);
     }

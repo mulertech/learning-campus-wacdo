@@ -66,7 +66,6 @@ final class CollaborateurController extends AbstractController
 
 
         return $this->render('collaborateur/new.html.twig', [
-            'collaborateur' => $collaborateur,
             'form' => $form,
         ]);
     }
