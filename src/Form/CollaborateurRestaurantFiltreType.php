@@ -2,22 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\CollaborateurFiltre;
+use App\Entity\CollaborateurRestaurantFiltre;
 use App\Entity\Fonction;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CollaborateurFiltreType extends AbstractType
+class CollaborateurRestaurantFiltreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prenom')
+            ->add('debut', DateType::class, [
+                'required' => false,
+            ])
+            ->add('fonction', EntityType::class, [
+                'class' => Fonction::class,
+                'choice_label' => 'intitule',
+                'placeholder' => 'Toutes les fonctions',
+                'required' => false,
+                'label' => 'Fonction'
+            ])
             ->add('nom')
-            ->add('email')
             ->add('submit', SubmitType::class, ['label' => 'Enregistrer'])
         ;
     }
@@ -25,7 +34,7 @@ class CollaborateurFiltreType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => CollaborateurFiltre::class,
+            'data_class' => CollaborateurRestaurantFiltre::class,
             'method' => 'GET',
             'csrf_protection' => false,
         ]);

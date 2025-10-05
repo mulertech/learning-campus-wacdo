@@ -27,11 +27,14 @@ class CollaborateurRepository extends ServiceEntityRepository
                 'a',
                 'WITH',
                 'a.dateFin IS NULL OR a.dateFin >= CURRENT_DATE()'
-            )
-            ->leftJoin('a.fonction', 'f')
-            ->addSelect('a', 'f')
-            ->where('f IS NOT NULL');
+            );
 
+
+        if ($filter->getPrenom()) {
+            $queryBuilder
+                ->andWhere('LOWER(c.prenom) LIKE :prenom')
+                ->setParameter('prenom', '%' . strtolower($filter->getPrenom()) . '%');
+        }
 
         if ($filter->getNom()) {
             $queryBuilder
@@ -39,10 +42,10 @@ class CollaborateurRepository extends ServiceEntityRepository
                 ->setParameter('nom', '%' . strtolower($filter->getNom()) . '%');
         }
 
-        if ($filter->getFonction()) {
+        if ($filter->getEmail()) {
             $queryBuilder
-                ->andWhere('f = :fonction')
-                ->setParameter('fonction', $filter->getFonction());
+                ->andWhere('LOWER(c.email) LIKE :email')
+                ->setParameter('email', '%' . strtolower($filter->getEmail()) . '%');
         }
 
         return $queryBuilder

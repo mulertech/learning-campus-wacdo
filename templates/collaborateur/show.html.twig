@@ -5,50 +5,34 @@
 {% block body %}
     <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">C</span>OLLABORATEUR</h1>
 
-    <table class="relative mx-auto overflow-hidden my-4 rounded-xl shadow-xl">
-        <thead class="text-md text-gray-700 uppercase bg-gray-200">
-            <tr>
-                <th class="px-6 py-3">Prénom</th>
-                <th class="px-6 py-3">Nom</th>
-                <th class="px-6 py-3">Email</th>
-                <th class="px-6 py-3">Date de première embauche</th>
-                <th class="px-6 py-3">Administrateur</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="bg-white border-b border-gray-200">
-                <td class="px-6 py-4">{{ collaborateur.prenom }}</td>
-                <td class="px-6 py-4">{{ collaborateur.nom }}</td>
-                <td class="px-6 py-4">{{ collaborateur.email }}</td>
-                <td class="px-6 py-4">{{ collaborateur.datePremiereEmbauche|date('d/m/Y') }}</td>
-                <td class="px-6 py-4">{{ collaborateur.administrateur ? 'Oui' : 'Non' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="w-fit relative mx-auto overflow-hidden shadow-xl bg-white rounded-xl p-12 mt-12">
+        {{ include('collaborateur/_form.html.twig', {'button_label': 'Modifier ce collaborateur'}) }}
+        {{ include('collaborateur/_delete_form.html.twig') }}
+    </div>
 
-    <h2 class="text-center text-2xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">L</span>iste des affectations</h2>
+    <h2 class="text-center text-3xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">L</span>iste des affectations</h2>
 
     <div class="flex items-center justify-center">
-        {{ form_start(form, {
+        {{ form_start(collaborateurAffectationForm, {
             attr: { class: 'flex bg-white rounded-xl shadow-lg border border-gray-400' }
         }) }}
-            {{ form_label(form.debut, 'Date de début d\'affectation :', {
+            {{ form_label(collaborateurAffectationForm.debut, 'Date de début d\'affectation :', {
                 label_attr: { class: 'flex font-semibold text-lg mx-2' }
             }) }}
-            {{ form_widget(form.debut, {
+            {{ form_widget(collaborateurAffectationForm.debut, {
                 attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
             }) }}
-            {{ form_label(form.fonction, 'Fonction :', {
+            {{ form_label(collaborateurAffectationForm.fonction, 'Fonction :', {
                 label_attr: { class: 'flex font-semibold text-lg mx-2' }
             }) }}
-            {{ form_widget(form.fonction, {
+            {{ form_widget(collaborateurAffectationForm.fonction, {
                 attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
             }) }}
-            {{ form_widget(form.submit, {
+            {{ form_widget(collaborateurAffectationForm.submit, {
                 label: 'Rechercher',
                 attr: { class: 'flex px-2 items-center bg-blue-600 rounded-r-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
             }) }}
-        {{ form_end(form) }}
+        {{ form_end(collaborateurAffectationForm) }}
     </div>
 
     <table class="relative mx-auto overflow-hidden my-4 rounded-xl shadow-xl">
@@ -92,8 +76,8 @@
         Retourner à la liste
     </a>
 
-    <a href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
-        Modifier ce collaborateur
+    <a href="{{ path('app_collaborateur_new_affectation', {'id': collaborateur.id}) }}" class="ml-4 p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
+        Affecter ce collaborateur à un nouveau poste
     </a>
 
     {{ include('collaborateur/_delete_form.html.twig') }}

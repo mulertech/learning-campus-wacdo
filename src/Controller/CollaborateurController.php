@@ -81,15 +81,27 @@ final class CollaborateurController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_collaborateur_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_collaborateur_show', methods: ['GET', 'POST'])]
     public function show(
         Collaborateur $collaborateur,
         Request $request,
+        EntityManagerInterface $entityManager,
         AffectationRepository $affectationRepository
     ): Response {
-        $collaborateurAffectationFiltre = new CollaborateurAffectationFiltre();
-        $form = $this->createForm(CollaborateurAffectationFiltreType::class, $collaborateurAffectationFiltre);
+        $form = $this->createForm(CollaborateurType::class, $collaborateur);
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le collaborateur a bien été modifié.');
+
+            return $this->redirectToRoute('app_collaborateur_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        $collaborateurAffectationFiltre = new CollaborateurAffectationFiltre();
+        $collaborateurAffectationForm = $this->createForm(CollaborateurAffectationFiltreType::class, $collaborateurAffectationFiltre);
+        $collaborateurAffectationForm->handleRequest($request);
 
         $affectations = $affectationRepository->findByCollaborateurWithFilter(
             $collaborateurAffectationFiltre,
@@ -99,48 +111,24 @@ final class CollaborateurController extends AbstractController
         return $this->render('collaborateur/show.html.twig', [
             'collaborateur' => $collaborateur,
             'form' => $form,
+            'collaborateurAffectationForm' => $collaborateurAffectationForm,
             'affectations' => $affectations,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_collaborateur_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/nouvelle-affectation', name: 'app_collaborateur_new_affectation', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
         Collaborateur $collaborateur,
         EntityManagerInterface $entityManager,
-        UtilisateurRepository $utilisateurRepository
     ): Response {
-        $form = $this->createForm(CollaborateurType::class, $collaborateur);
-
         $affectation = new Affectation();
         $affectation->setCollaborateur($collaborateur);
-        $affectationForm = $this->createForm(AffectationToCollaborateurType::class, $affectation);
+        $form = $this->createForm(AffectationToCollaborateurType::class, $affectation);
 
         $form->handleRequest($request);
-        $affectationForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Le collaborateur a bien été modifié.');
-
-            $utilisateur = $utilisateurRepository->findOneByEmail($collaborateur->getEmail());
-
-            if (null !== $utilisateur) {
-                $utilisateur->setRoles($collaborateur->isAdministrateur() ? ['ROLE_ADMIN'] : []);
-                $entityManager->flush();
-
-                $role = $collaborateur->isAdministrateur() ? 'administrateur' : 'utilisateur standard';
-                $this->addFlash(
-                    'success',
-                    'L\'utilisateur correspondant existe et est actuellement défini comme ' . $role . '.'
-                );
-            }
-
-            return $this->redirectToRoute('app_collaborateur_show', ['id' => $collaborateur->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        if ($affectationForm->isSubmitted() && $affectationForm->isValid()) {
             $entityManager->persist($affectation);
             $entityManager->flush();
 
@@ -152,7 +140,6 @@ final class CollaborateurController extends AbstractController
         return $this->render('collaborateur/edit.html.twig', [
             'collaborateur' => $collaborateur,
             'form' => $form,
-            'affectationForm' => $affectationForm,
         ]);
     }
 

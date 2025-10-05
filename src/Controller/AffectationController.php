@@ -77,11 +77,7 @@ final class AffectationController extends AbstractController
 
             $this->addFlash('success', 'L\'affectation a bien été modifiée.');
 
-            return $this->redirectToRoute(
-                'app_restaurant_show',
-                ['id' => $affectation->getRestaurant()?->getId()],
-                Response::HTTP_SEE_OTHER
-            );
+            return $this->redirectToRoute('app_affectation_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('affectation/edit.html.twig', [

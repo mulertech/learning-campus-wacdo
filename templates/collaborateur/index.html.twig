@@ -9,16 +9,22 @@
         {{ form_start(form, {
             attr: { class: 'flex bg-white rounded-xl shadow-lg border border-gray-400' }
         }) }}
+            {{ form_label(form.prenom, 'Prénom :', {
+                label_attr: { class: 'flex font-semibold text-lg mx-2' }
+            }) }}
+            {{ form_widget(form.prenom, {
+                attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
+            }) }}
             {{ form_label(form.nom, 'Nom :', {
                 label_attr: { class: 'flex font-semibold text-lg mx-2' }
             }) }}
             {{ form_widget(form.nom, {
                 attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
             }) }}
-            {{ form_label(form.fonction, 'Fonction :', {
+            {{ form_label(form.email, 'Email :', {
                 label_attr: { class: 'flex font-semibold text-lg mx-2' }
             }) }}
-            {{ form_widget(form.fonction, {
+            {{ form_widget(form.email, {
                 attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
             }) }}
             {{ form_widget(form.submit, {
@@ -54,9 +60,6 @@
                 <td class="px-6 py-4">
                     <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_collaborateur_show', {'id': collaborateur.id}) }}">
                         Détail
-                    </a>
-                    <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}">
-                        Modifier
                     </a>
                 </td>
             </tr>

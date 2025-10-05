@@ -3,7 +3,9 @@
 {% block title %}Nouvelle affectation{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">A</span>JOUTER UN NOUVEAU COLLABORATEUR AU RESTAURANT {{ restaurant.nom }}</h1>
+    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">
+            A</span>JOUTER UN NOUVEAU COLLABORATEUR AU RESTAURANT {{ restaurant.nom|upper }}
+    </h1>
 
     <div class="w-fit relative mx-auto overflow-hidden shadow-xl bg-white rounded-xl p-12 mt-12">
         {{ include('affectation/new_form.html.twig') }}

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\CollaborateurRestaurantFiltre;
 use App\Entity\Restaurant;
 use App\Entity\RestaurantFiltre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -47,9 +48,9 @@ class RestaurantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findCurrentAffectations($restaurantId)
+    public function findCurrentAffectationsWithFilter($restaurantId, CollaborateurRestaurantFiltre $filter)
     {
-        return $this->createQueryBuilder('r')
+        $queryBuilder = $this->createQueryBuilder('r')
             ->select('a.id, c.nom, c.prenom, c.email, f.intitule, a.dateDebut, a.dateFin')
             ->leftJoin('r.affectations', 'a')
             ->leftJoin('a.collaborateur', 'c')
@@ -57,7 +58,64 @@ class RestaurantRepository extends ServiceEntityRepository
             ->andWhere('r.id = :restaurantId')
             ->andWhere('a.dateDebut <= CURRENT_DATE()')
             ->andWhere('a.dateFin IS NULL OR a.dateFin > CURRENT_DATE()')
-            ->setParameter('restaurantId', $restaurantId)
+            ->setParameter('restaurantId', $restaurantId);
+
+        if ($filter->getNom()) {
+            $queryBuilder
+                ->andWhere('LOWER(c.nom) LIKE :nom')
+                ->setParameter('nom', '%' . strtolower($filter->getNom()) . '%');
+        }
+
+        if ($filter->getDebut()) {
+            $queryBuilder
+                ->andWhere('a.dateDebut = :debut')
+                ->setParameter('debut', $filter->getDebut());
+        }
+
+        if ($filter->getFonction()) {
+            $queryBuilder
+                ->andWhere('f = :fonction')
+                ->setParameter('fonction', $filter->getFonction());
+        }
+
+        return $queryBuilder
+            ->orderBy('c.nom', 'ASC')
+            ->addOrderBy('c.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllAffectationsWithFilter($restaurantId, CollaborateurRestaurantFiltre $filter)
+    {
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->select('a.id, c.nom, c.prenom, c.email, f.intitule, a.dateDebut, a.dateFin')
+            ->leftJoin('r.affectations', 'a')
+            ->leftJoin('a.collaborateur', 'c')
+            ->leftJoin('a.fonction', 'f')
+            ->andWhere('r.id = :restaurantId')
+            ->setParameter('restaurantId', $restaurantId);
+
+        if ($filter->getNom()) {
+            $queryBuilder
+                ->andWhere('LOWER(c.nom) LIKE :nom')
+                ->setParameter('nom', '%' . strtolower($filter->getNom()) . '%');
+        }
+
+        if ($filter->getDebut()) {
+            $queryBuilder
+                ->andWhere('a.dateDebut = :debut')
+                ->setParameter('debut', $filter->getDebut());
+        }
+
+        if ($filter->getFonction()) {
+            $queryBuilder
+                ->andWhere('f = :fonction')
+                ->setParameter('fonction', $filter->getFonction());
+        }
+
+        return $queryBuilder
+            ->orderBy('c.nom', 'ASC')
+            ->addOrderBy('c.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }

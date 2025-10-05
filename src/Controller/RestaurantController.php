@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\CollaborateurRestaurantFiltre;
 use App\Entity\Restaurant;
 use App\Entity\RestaurantFiltre;
+use App\Form\CollaborateurRestaurantFiltreType;
 use App\Form\RestaurantFiltreType;
 use App\Form\RestaurantType;
 use App\Repository\RestaurantRepository;
@@ -70,12 +72,23 @@ final class RestaurantController extends AbstractController
             return $this->redirectToRoute('app_restaurant_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $affectations = $repository->findCurrentAffectations($restaurant->getId());
+        $collaborateurRestaurantFiltre = new CollaborateurRestaurantFiltre();
+        $collaborateurRestaurantForm = $this->createForm(
+            CollaborateurRestaurantFiltreType::class,
+            $collaborateurRestaurantFiltre
+        );
+        $collaborateurRestaurantForm->handleRequest($request);
+
+        $affectations = $repository->findCurrentAffectationsWithFilter(
+            $restaurant->getId(),
+            $collaborateurRestaurantFiltre
+        );
 
         return $this->render('restaurant/show.html.twig', [
             'restaurant' => $restaurant,
             'affectations' => $affectations,
             'form' => $form,
+            'collaborateurRestaurantForm' => $collaborateurRestaurantForm,
         ]);
     }
 
@@ -92,11 +105,28 @@ final class RestaurantController extends AbstractController
         return $this->redirectToRoute('app_restaurant_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/affectations/{id}', name: 'app_affectations_restaurant', methods: ['GET'])]
-    public function affectationsRestaurant(Restaurant $restaurant): Response
-    {
+    #[Route('/affectations/{id}', name: 'app_restaurant_affectations', methods: ['GET'])]
+    public function affectationsRestaurant(
+        Restaurant $restaurant,
+        Request $request,
+        RestaurantRepository $repository
+    ): Response {
+        $collaborateurRestaurantFiltre = new CollaborateurRestaurantFiltre();
+        $form = $this->createForm(
+            CollaborateurRestaurantFiltreType::class,
+            $collaborateurRestaurantFiltre
+        );
+        $form->handleRequest($request);
+
+        $affectations = $repository->findAllAffectationsWithFilter(
+            $restaurant->getId(),
+            $collaborateurRestaurantFiltre
+        );
+
         return $this->render('restaurant/affectations.html.twig', [
             'restaurant' => $restaurant,
+            'affectations' => $affectations,
+            'form' => $form,
         ]);
     }
 }

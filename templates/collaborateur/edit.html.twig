@@ -3,24 +3,61 @@
 {% block title %}Modifier le collaborateur{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">M</span>ODIFIER LE COLLABORATEUR</h1>
+    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">
+            C</span>réer une nouvelle affectation pour le collaborateur {{ collaborateur.prenom }} {{ collaborateur.nom }} :
+    </h1>
 
     <div class="w-fit relative mx-auto overflow-hidden shadow-xl bg-white rounded-xl p-12 mt-12">
-        {{ include('collaborateur/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
-        {{ include('collaborateur/_delete_form.html.twig') }}
+        {{ form_start(form, {
+            attr: { class: 'grid md:grid-cols-2' }
+        }) }}
+            {{ form_label(form.dateDebut, 'Date de début :', {
+                label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
+            }) }}
+            {{ form_widget(form.dateDebut, {
+                attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
+            }) }}
+            <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
+                {{ form_errors(form.dateDebut) }}
+            </div>
+            {{ form_label(form.dateFin, 'Date de fin :', {
+                label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
+            }) }}
+            {{ form_widget(form.dateFin, {
+                attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
+            }) }}
+            <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
+                {{ form_errors(form.dateFin) }}
+            </div>
+            {{ form_label(form.fonction, 'Fonction :', {
+                label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
+            }) }}
+            {{ form_widget(form.fonction, {
+                attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
+            }) }}
+            <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
+                {{ form_errors(form.fonction) }}
+            </div>
+            {{ form_label(form.restaurant, 'Restaurant :', {
+                label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
+            }) }}
+            {{ form_widget(form.restaurant, {
+                attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
+            }) }}
+            <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
+                {{ form_errors(form.restaurant) }}
+            </div>
+
+            <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-4">
+                {{ form_errors(form) }}
+            </div>
+
+            <div class="col-span-1 md:col-span-2">
+                {{ form_widget(form.submit, {
+                    'label': button_label|default('Enregistrer'),
+                    'attr': { class: 'w-full items-center h-12 bg-blue-600 mt-8 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
+                }) }}
+            </div>
+        {{ form_end(form) }}
     </div>
-
-    <a href="{{ path('app_collaborateur_index') }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
-        Retourner à la liste
-    </a>
-
-
-    <br>
-
-    <h2 class="text-center text-2xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">C</span>réer une nouvelle affectation pour ce collaborateur :</h2>
-
-    {{ form_start(affectationForm) }}
-    {{ form_widget(affectationForm) }}
-        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
-    {{ form_end(affectationForm) }}
 {% endblock %}

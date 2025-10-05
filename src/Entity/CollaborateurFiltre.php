@@ -4,8 +4,20 @@ namespace App\Entity;
 
 class CollaborateurFiltre
 {
+    public ?string $prenom = null;
     public ?string $nom = null;
-    public ?Fonction $fonction = null;
+    public ?string $email = null;
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(?string $prenom): self
+    {
+        $this->prenom = $prenom;
+        return $this;
+    }
 
     public function getNom(): ?string
     {
@@ -18,14 +30,14 @@ class CollaborateurFiltre
         return $this;
     }
 
-    public function getFonction(): ?Fonction
+    public function getEmail(): ?string
     {
-        return $this->fonction;
+        return $this->email;
     }
 
-    public function setFonction(?Fonction $fonction): self
+    public function setEmail(?string $email): self
     {
-        $this->fonction = $fonction;
+        $this->email = $email;
         return $this;
     }
 }
