@@ -34,8 +34,8 @@
                             </div>
                         {% else %}
                             <div class="flex ml-auto">
-                                <a href="{{ path('app_login') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">Se connecter</a>
-                                <a href="{{ path('app_register') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">S'inscrire</a>
+                                <a href="{{ path('app_login') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') == 'app_login' %} border-b-2 border-green-900{% endif %}">Se connecter</a>
+                                <a href="{{ path('app_register') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') == 'app_register' %} border-b-2 border-green-900{% endif %}">S'inscrire</a>
                             </div>
                         {% endif %}
                     </nav>
