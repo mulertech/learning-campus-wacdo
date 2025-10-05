@@ -52,20 +52,13 @@ final class RestaurantController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_restaurant_show', methods: ['GET'])]
-    public function show(Restaurant $restaurant, RestaurantRepository $repository): Response
-    {
-        $affectations = $repository->findCurrentAffectations($restaurant->getId());
-
-        return $this->render('restaurant/show.html.twig', [
-            'restaurant' => $restaurant,
-            'affectations' => $affectations,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_restaurant_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Restaurant $restaurant, EntityManagerInterface $entityManager): Response
-    {
+    #[Route('/{id}', name: 'app_restaurant_show', methods: ['GET', 'POST'])]
+    public function show(
+        Restaurant $restaurant,
+        RestaurantRepository $repository,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
         $form = $this->createForm(RestaurantType::class, $restaurant);
         $form->handleRequest($request);
 
@@ -77,8 +70,11 @@ final class RestaurantController extends AbstractController
             return $this->redirectToRoute('app_restaurant_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('restaurant/edit.html.twig', [
+        $affectations = $repository->findCurrentAffectations($restaurant->getId());
+
+        return $this->render('restaurant/show.html.twig', [
             'restaurant' => $restaurant,
+            'affectations' => $affectations,
             'form' => $form,
         ]);
     }

@@ -17,25 +17,47 @@
             {% block header %}
                 <header>
                     <nav class="menu nav flex items-stretch justify-between text-xl font-medium text-shadow-lg text-yellow-300 mb-4">
-                        <a href="{{ path('app_home') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900 border-r-gray-400{% if app.request.get('_route') == 'app_home' %} border-b-2 border-green-900{% endif %}">Accueil</a>
+                        <a href="{{ path('app_home') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900 border-r-gray-400{% if app.request.get('_route') == 'app_home' %} border-b-2 border-green-900{% endif %}">
+                            Accueil
+                        </a>
                         {% if app.user and is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('app_restaurant_index') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') starts with 'app_restaurant' %} border-b-2 border-green-900{% endif %}">Gestion des restaurants</a>
-                            <a href="{{ path('app_collaborateur_index') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') starts with 'app_collaborateur' %} border-b-2 border-green-900{% endif %}">Gestion des collaborateurs</a>
-                            <a href="{{ path('app_fonction_index') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') starts with 'app_fonction' %} border-b-2 border-green-900{% endif %}">Gestion des fonctions</a>
-                            <a href="{{ path('app_affectation_index') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900 mr-16{% if app.request.get('_route') starts with 'app_affectation' %} border-b-2 border-green-900{% endif %}">Recherche des affectations</a>
+                            <a href="{{ path('app_restaurant_index') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') starts with 'app_restaurant' %} border-b-2 border-green-900{% endif %}">
+                                Gestion des restaurants
+                            </a>
+                            <a href="{{ path('app_collaborateur_index') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') starts with 'app_collaborateur' %} border-b-2 border-green-900{% endif %}">
+                                Gestion des collaborateurs
+                            </a>
+                            <a href="{{ path('app_fonction_index') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') starts with 'app_fonction' %} border-b-2 border-green-900{% endif %}">
+                                Gestion des fonctions
+                            </a>
+                            <a href="{{ path('app_affectation_index') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900 mr-16{% if app.request.get('_route') starts with 'app_affectation' %} border-b-2 border-green-900{% endif %}">
+                                Recherche des affectations
+                            </a>
                             <div class="flex ml-auto">
-                                <p class="py-4 px-4 flex items-center">Vous êtes connecté en tant que {{ app.user.email }}</p>
-                                <a href="{{ path('app_logout') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">Se déconnecter</a>
+                                <p class="py-4 px-4 flex items-center">
+                                    Vous êtes connecté en tant que {{ app.user.email }}
+                                </p>
+                                <a href="{{ path('app_logout') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">
+                                    Se déconnecter
+                                </a>
                             </div>
                         {% elseif app.user %}
                             <div class="flex ml-auto">
-                                <div class="py-4 px-4 flex items-center">Bonjour, vous êtes connecté en tant que {{ app.user.email }}</div>
-                                <a href="{{ path('app_logout') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">Se déconnecter</a>
+                                <div class="py-4 px-4 flex items-center">
+                                    Bonjour, vous êtes connecté en tant que {{ app.user.email }}
+                                </div>
+                                <a href="{{ path('app_logout') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">
+                                    Se déconnecter
+                                </a>
                             </div>
                         {% else %}
                             <div class="flex ml-auto">
-                                <a href="{{ path('app_login') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') == 'app_login' %} border-b-2 border-green-900{% endif %}">Se connecter</a>
-                                <a href="{{ path('app_register') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') == 'app_register' %} border-b-2 border-green-900{% endif %}">S'inscrire</a>
+                                <a href="{{ path('app_login') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') == 'app_login' %} border-b-2 border-green-900{% endif %}">
+                                    Se connecter
+                                </a>
+                                <a href="{{ path('app_register') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900{% if app.request.get('_route') == 'app_register' %} border-b-2 border-green-900{% endif %}">
+                                    S'inscrire
+                                </a>
                             </div>
                         {% endif %}
                     </nav>

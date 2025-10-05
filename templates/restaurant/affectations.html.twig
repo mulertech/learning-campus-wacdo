@@ -28,11 +28,15 @@
             </tr>
         {% else %}
             <tr class="bg-white border-b border-gray-200">
-                <td class="px-6 py-4" colspan="4">Pas d'affectations</td>
+                <td class="px-6 py-4" colspan="4">
+                    Pas d'affectations
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_affectation_new', {'id': restaurant.id}) }}">Affecter un nouveau collaborateur</a>
+    <a href="{{ path('app_affectation_new', {'id': restaurant.id}) }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
+        Affecter un nouveau collaborateur
+    </a>
 {% endblock %}

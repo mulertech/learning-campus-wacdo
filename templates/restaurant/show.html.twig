@@ -5,27 +5,11 @@
 {% block body %}
     <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">R</span>ESTAURANT</h1>
 
-    <table class="relative mx-auto overflow-hidden my-4 rounded-xl shadow-xl">
-        <thead class="text-md text-gray-700 uppercase bg-gray-200">
-            <tr>
-                <th class="px-6 py-3">Nom</th>
-                <th class="px-6 py-3">Adresse</th>
-                <th class="px-6 py-3">CodePostal</th>
-                <th class="px-6 py-3">Ville</th>
-            </tr>
-        <tbody>
-            <tr class="bg-white border-b border-gray-200">
-                <td class="px-6 py-4">{{ restaurant.nom }}</td>
-                <td class="px-6 py-4">{{ restaurant.adresse }}</td>
-                <td class="px-6 py-4">{{ restaurant.codePostal }}</td>
-                <td class="px-6 py-4">{{ restaurant.ville }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
-    <a class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-md text-blue-100 hover:bg-blue-700" href="{{ path('app_restaurant_edit', {'id': restaurant.id}) }}">
-        Modifier ce restaurant
-    </a>
+    <div class="w-fit relative mx-auto overflow-hidden shadow-xl bg-white rounded-xl p-12 mt-12">
+        {{ include('restaurant/_form.html.twig', {'button_label': 'Modifier ce restaurant'}) }}
+        {{ include('restaurant/_delete_form.html.twig') }}
+    </div>
+
     <br>
     <h2 class="text-center text-2xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">L</span>iste des collaborateurs</h2>
 
@@ -52,20 +36,26 @@
                     <td class="px-6 py-4">{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
                     <td class="px-6 py-4">
                         {% if (not affectation.dateFin) or (affectation.dateFin > date()) %}
-                            <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">Modifier</a>
+                            <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">
+                                Modifier
+                            </a>
                         {% endif %}
                     </td>
                 </tr>
             {% else %}
                 <tr class="bg-white border-b border-gray-200">
-                    <td colspan="5">Pas de collaborateurs</td>
+                    <td colspan="5">
+                        Pas de collaborateurs
+                    </td>
                 </tr>
             {% endfor %}
     </table>
 
-    <a href="{{ path('app_affectations_restaurant', {'id': restaurant.id}) }}">Modifier</a>
+    <a href="{{ path('app_affectations_restaurant', {'id': restaurant.id}) }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
+        Modifier
+    </a>
 
-    <a href="{{ path('app_restaurant_index') }}">Retourner à la liste des restaurants</a>
-
-    {{ include('restaurant/_delete_form.html.twig') }}
+    <a href="{{ path('app_restaurant_index') }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
+        Retourner à la liste des restaurants
+    </a>
 {% endblock %}

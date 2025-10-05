@@ -27,7 +27,7 @@
             {{ form_widget(form.ville, {
                 attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
             }) }}
-            {{ form_row(form.submit, {
+            {{ form_widget(form.submit, {
                 label: 'Rechercher',
                 attr: { class: 'flex px-2 items-center bg-blue-600 rounded-r-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
             }) }}
@@ -57,11 +57,15 @@
             </tr>
         {% else %}
             <tr class="bg-white border-b border-gray-200">
-                <td class="px-6 py-4" colspan="6">Pas de restaurant</td>
+                <td class="px-6 py-4" colspan="6">
+                    Pas de restaurant
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_restaurant_new') }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">Créer un nouveau restaurant</a>
+    <a href="{{ path('app_restaurant_new') }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
+        Créer un nouveau restaurant
+    </a>
 {% endblock %}

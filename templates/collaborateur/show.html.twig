@@ -44,7 +44,7 @@
             {{ form_widget(form.fonction, {
                 attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
             }) }}
-            {{ form_row(form.submit, {
+            {{ form_widget(form.submit, {
                 label: 'Rechercher',
                 attr: { class: 'flex px-2 items-center bg-blue-600 rounded-r-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
             }) }}
@@ -72,21 +72,29 @@
                 <td class="px-6 py-4">{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
                 <td class="px-6 py-4">
                     {% if not affectation.dateFin %}
-                        <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">Modifier</a>
+                        <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">
+                            Modifier
+                        </a>
                     {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr class="bg-white border-b border-gray-200">
-                <td colspan="4">Pas d'affectations</td>
+                <td colspan="4">
+                    Pas d'affectations
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_collaborateur_index') }}">Retourner à la liste</a>
+    <a href="{{ path('app_collaborateur_index') }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
+        Retourner à la liste
+    </a>
 
-    <a href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}">Modifier ce collaborateur</a>
+    <a href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
+        Modifier ce collaborateur
+    </a>
 
     {{ include('collaborateur/_delete_form.html.twig') }}
 {% endblock %}

@@ -5,7 +5,9 @@
 {% block body %}
         {% if app.user %}
             <div class="mb-3">
-                Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">
+                    Se déconnecter
+                </a>
             </div>
         {% else %}
             <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">S</span>E CONNECTER</h1>
