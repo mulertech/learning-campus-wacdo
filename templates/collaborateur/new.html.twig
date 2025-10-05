@@ -5,7 +5,9 @@
 {% block body %}
     <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">C</span>REER UN NOUVEAU COLLABORATEUR</h1>
 
-    {{ include('collaborateur/_form.html.twig') }}
+    <div class="w-fit relative mx-auto overflow-hidden my-4 rounded-xl shadow-xl">
+        {{ include('collaborateur/_form.html.twig') }}
+    </div>
 
     <a href="{{ path('app_collaborateur_index') }}">Retourner à la liste</a>
 {% endblock %}

@@ -1,51 +1,51 @@
 {{ form_start(form, {
     attr: { class: 'grid md:grid-cols-2 bg-white rounded-xl shadow-lg p-12 mt-12' }
 }) }}
-    {{ form_label(form.nom, 'Nom :', {
+    {{ form_label(form.dateDebut, 'Date de début :', {
         label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
     }) }}
-    {{ form_widget(form.nom, {
+    {{ form_widget(form.dateDebut, {
         attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
     }) }}
     <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
-        {{ form_errors(form.nom) }}
+        {{ form_errors(form.dateDebut) }}
     </div>
-    {{ form_label(form.adresse, 'Adresse :', {
+    {{ form_label(form.dateFin, 'Date de fin :', {
         label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
     }) }}
-    {{ form_widget(form.adresse, {
+    {{ form_widget(form.dateFin, {
         attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
     }) }}
     <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
-        {{ form_errors(form.adresse) }}
+        {{ form_errors(form.dateFin) }}
     </div>
-    {{ form_label(form.codePostal, 'Code postal :', {
+    {{ form_label(form.collaborateur, 'Collaborateur :', {
         label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
     }) }}
-    {{ form_widget(form.codePostal, {
+    {{ form_widget(form.collaborateur, {
         attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
     }) }}
     <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
-        {{ form_errors(form.codePostal) }}
+        {{ form_errors(form.collaborateur) }}
     </div>
-    {{ form_label(form.ville, 'Ville :', {
+    {{ form_label(form.fonction, 'Fonction :', {
         label_attr: { class: 'col-span-1 font-semibold text-lg my-auto' }
     }) }}
-    {{ form_widget(form.ville, {
+    {{ form_widget(form.fonction, {
         attr: { class: 'col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl' }
     }) }}
     <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-1">
-        {{ form_errors(form.ville) }}
+        {{ form_errors(form.fonction) }}
     </div>
 
-    <div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-4">
-        {{ form_errors(form) }}
-    </div>
+<div class="col-span-1 md:col-span-2 text-red-600 text-sm mt-4">
+    {{ form_errors(form) }}
+</div>
 
-    <div class="col-span-1 md:col-span-2">
-        {{ form_widget(form.submit, {
-            'label': button_label|default('Enregistrer'),
-            'attr': { class: 'w-full items-center h-12 bg-blue-600 mt-8 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
-        }) }}
-    </div>
+<div class="col-span-1 md:col-span-2">
+    {{ form_widget(form.submit, {
+        'label': button_label|default('Enregistrer'),
+        'attr': { class: 'w-full items-center h-12 bg-blue-600 mt-8 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
+    }) }}
+</div>
 {{ form_end(form) }}

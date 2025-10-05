@@ -23,12 +23,8 @@ class AffectationToRestaurantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateDebut', options: [
-                'label' => 'Date de début',
-            ])
-            ->add('dateFin', options: [
-                'label' => 'Date de fin',
-            ])
+            ->add('dateDebut')
+            ->add('dateFin')
             ->add('collaborateur', EntityType::class, [
                 'class' => Collaborateur::class,
                 'choice_label' => 'email',
