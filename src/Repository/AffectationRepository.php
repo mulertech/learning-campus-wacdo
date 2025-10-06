@@ -27,10 +27,10 @@ class AffectationRepository extends ServiceEntityRepository
             ->leftJoin('a.collaborateur', 'c')
             ->addSelect('r', 'f', 'c');
 
-        if ($filter->getRestaurant()) {
+        if ($filter->getVille()) {
             $queryBuilder
-                ->andWhere('r = :restaurant')
-                ->setParameter('restaurant', $filter->getRestaurant());
+                ->andWhere('LOWER(r.ville) LIKE :ville')
+                ->setParameter('ville', '%' . strtolower($filter->getVille()) . '%');
         }
 
         if ($filter->getFonction()) {

@@ -6,19 +6,19 @@ use DateTime;
 
 class AffectationFiltre
 {
-    public ?Restaurant $restaurant = null;
+    public ?string $ville = null;
     public ?DateTime $debut = null;
     public ?DateTime $fin = null;
     public ?Fonction $fonction = null;
 
-    public function getRestaurant(): ?Restaurant
+    public function getVille(): ?string
     {
-        return $this->restaurant;
+        return $this->ville;
     }
 
-    public function setRestaurant(?Restaurant $restaurant): self
+    public function setVille(?string $ville): self
     {
-        $this->restaurant = $restaurant;
+        $this->ville = $ville;
         return $this;
     }
 

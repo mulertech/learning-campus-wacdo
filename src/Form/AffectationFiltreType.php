@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\AffectationFiltre;
 use App\Entity\Fonction;
-use App\Entity\Restaurant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -17,13 +16,7 @@ class AffectationFiltreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('restaurant', EntityType::class, [
-                'class' => Restaurant::class,
-                'choice_label' => 'nom',
-                'placeholder' => 'Tous les restaurants',
-                'required' => false,
-                'label' => 'Restaurant'
-            ])
+            ->add('ville')
             ->add('debut', DateType::class, [
                 'required' => false,
             ])

@@ -50,7 +50,7 @@ final class AffectationController extends AbstractController
             $this->addFlash('success', 'L\'affectation a bien été créée.');
 
             return $this->redirectToRoute(
-                'app_affectations_restaurant',
+                'app_restaurant_affectations',
                 ['id' => $restaurant->getId()],
                 Response::HTTP_SEE_OTHER
             );
