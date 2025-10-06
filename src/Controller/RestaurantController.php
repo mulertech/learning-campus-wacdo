@@ -25,11 +25,11 @@ final class RestaurantController extends AbstractController
         Request $request,
         PaginatorInterface $paginator
     ): Response {
-        $affectationFiltre = new RestaurantFiltre();
-        $form = $this->createForm(RestaurantFiltreType::class, $affectationFiltre);
+        $restaurantFiltre = new RestaurantFiltre();
+        $form = $this->createForm(RestaurantFiltreType::class, $restaurantFiltre);
         $form->handleRequest($request);
 
-        $query = $restaurantRepository->findAllWithFilter($affectationFiltre);
+        $query = $restaurantRepository->findAllWithFilter($restaurantFiltre);
 
         $pagination = $paginator->paginate(
             $query,
