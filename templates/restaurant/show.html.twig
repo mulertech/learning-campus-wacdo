@@ -12,77 +12,7 @@
         {{ include('restaurant/_delete_form.html.twig') }}
     </div>
 
-    <br>
-    <h2 class="text-center text-3xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">
-            L</span>iste des collaborateurs
-    </h2>
-
-    <div class="flex items-center justify-center">
-        {{ form_start(collaborateurRestaurantForm, {
-            attr: { class: 'flex bg-white rounded-xl shadow-lg border border-gray-400' }
-        }) }}
-        {{ form_label(collaborateurRestaurantForm.fonction, 'Fonction :', {
-            label_attr: { class: 'flex font-semibold text-lg mx-2' }
-        }) }}
-        {{ form_widget(collaborateurRestaurantForm.fonction, {
-            attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
-        }) }}
-        {{ form_label(collaborateurRestaurantForm.nom, 'Nom :', {
-            label_attr: { class: 'flex font-semibold text-lg mx-2' }
-        }) }}
-        {{ form_widget(collaborateurRestaurantForm.nom, {
-            attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
-        }) }}
-        {{ form_label(collaborateurRestaurantForm.debut, 'Date de début :', {
-            label_attr: { class: 'flex font-semibold text-lg mx-2' }
-        }) }}
-        {{ form_widget(collaborateurRestaurantForm.debut, {
-            attr: { class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400' }
-        }) }}
-        {{ form_widget(collaborateurRestaurantForm.submit, {
-            label: 'Rechercher',
-            attr: { class: 'flex px-2 items-center bg-blue-600 rounded-r-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
-        }) }}
-        {{ form_end(collaborateurRestaurantForm) }}
-    </div>
-
-    <table class="relative overflow-x-auto w-full my-4">
-        <thead class="text-md text-gray-700 uppercase bg-gray-200">
-            <tr>
-                <th class="px-6 py-3">Prénom</th>
-                <th class="px-6 py-3">Nom</th>
-                <th class="px-6 py-3">Email</th>
-                <th class="px-6 py-3">Poste</th>
-                <th class="px-6 py-3">Date de début</th>
-                <th class="px-6 py-3">Date de fin</th>
-                <th class="px-6 py-3">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for affectation in affectations %}
-                <tr class="bg-white border-b border-gray-200">
-                    <td class="px-6 py-4">{{ affectation.prenom }}</td>
-                    <td class="px-6 py-4">{{ affectation.nom }}</td>
-                    <td class="px-6 py-4">{{ affectation.email }}</td>
-                    <td class="px-6 py-4">{{ affectation.intitule }}</td>
-                    <td class="px-6 py-4">{{ affectation.dateDebut|date('d/m/Y') }}</td>
-                    <td class="px-6 py-4">{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
-                    <td class="px-6 py-4">
-                        {% if (not affectation.dateFin) or (affectation.dateFin > date()) %}
-                            <a class="text-blue-600 p-4 items-center font-semibold text-lg hover:text-blue-500" href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">
-                                Modifier
-                            </a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% else %}
-                <tr class="bg-white border-b border-gray-200">
-                    <td colspan="5">
-                        Pas de collaborateurs
-                    </td>
-                </tr>
-            {% endfor %}
-    </table>
+    <twig:restaurant_show :restaurantId="restaurant.id" />
 
     <a href="{{ path('app_restaurant_affectations', {'id': restaurant.id}) }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
         Modifier

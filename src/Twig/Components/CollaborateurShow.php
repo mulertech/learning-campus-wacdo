@@ -2,12 +2,13 @@
 
 namespace App\Twig\Components;
 
-use App\Entity\AffectationFiltre;
+use App\Entity\Collaborateur;
+use App\Entity\CollaborateurAffectationFiltre;
 use App\Entity\Fonction;
-use App\Form\AffectationFiltreType;
+use App\Form\CollaborateurAffectationFiltreType;
 use App\Repository\AffectationRepository;
-use App\Repository\FonctionRepository;
 use DateTime;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -17,38 +18,33 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent('affectation_filtre_form')]
-class AffectationFiltreForm extends AbstractController
+#[AsLiveComponent('collaborateur_show')]
+class CollaborateurShow extends AbstractController
 {
     use ComponentWithFormTrait;
     use DefaultActionTrait;
-
-    #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
-    public ?string $ville = null;
-
-    #[LiveProp(writable: true)]
-    public ?DateTime $debut = null;
-
-    #[LiveProp(writable: true)]
-    public ?DateTime $fin = null;
 
     #[LiveProp(writable: true)]
     public ?Fonction $fonction = null;
 
     #[LiveProp(writable: true)]
+    public ?DateTime $debut = null;
+
+    #[LiveProp(writable: true)]
     public int $page = 1;
+
+    #[LiveProp(writable: true)]
+    public Collaborateur $collaborateur;
 
     public function __construct(
         private AffectationRepository $affectationRepository,
-        private FonctionRepository $fonctionRepository,
         private PaginatorInterface $paginator,
-    )
-    {
+    ) {
     }
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(AffectationFiltreType::class, $this->createFilter());
+        return $this->createForm(CollaborateurAffectationFiltreType::class, $this->createFilter());
     }
 
     public function onPropUpdate()
@@ -61,16 +57,12 @@ class AffectationFiltreForm extends AbstractController
     {
     }
 
-    #[LiveAction]
-    // Todo : reset page to 1 on search
-    public function search(): void
+    public function getAffectations(): PaginationInterface
     {
-        $this->page = 1;
-    }
-
-    public function getAffectations()
-    {
-        $query = $this->affectationRepository->findAllWithFilter($this->createFilter());
+        $query = $this->affectationRepository->findByCollaborateurWithFilter(
+            $this->createFilter(),
+            $this->collaborateur,
+        );
 
         return $this->paginator->paginate(
             $query,
@@ -79,13 +71,11 @@ class AffectationFiltreForm extends AbstractController
         );
     }
 
-    private function createFilter(): AffectationFiltre
+    private function createFilter(): CollaborateurAffectationFiltre
     {
-        $filter = new AffectationFiltre();
-        $filter->setVille($this->ville);
-        $filter->setDebut($this->debut);
-        $filter->setFin($this->fin);
+        $filter = new CollaborateurAffectationFiltre();
         $filter->setFonction($this->fonction);
+        $filter->setDebut($this->debut);
 
         return $filter;
     }
