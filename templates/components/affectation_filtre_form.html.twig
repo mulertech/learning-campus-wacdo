@@ -1,0 +1,81 @@
+<div {{ attributes }}>
+    <div class="flex items-center justify-center">
+        {{ form_start(form, {
+            attr: { class: 'flex bg-white rounded-xl shadow-lg border border-gray-400' }
+        }) }}
+        {{ form_label(form.ville, 'Ville :', {
+            label_attr: { class: 'flex font-semibold text-lg mx-2' }
+        }) }}
+        {{ form_widget(form.ville, {
+            attr: {
+                class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400',
+                'data-model': 'ville'
+            }
+        }) }}
+        {{ form_label(form.debut, 'Début de période :', {
+            label_attr: { class: 'flex font-semibold text-lg mx-2' }
+        }) }}
+        {{ form_widget(form.debut, {
+            attr: {
+                class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400',
+                'data-model': 'debut'
+            }
+        }) }}
+        {{ form_label(form.fin, 'Fin de période :', {
+            label_attr: { class: 'flex font-semibold text-lg mx-2' }
+        }) }}
+        {{ form_widget(form.fin, {
+            attr: {
+                class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400',
+                'data-model': 'fin'
+            }
+        }) }}
+        {{ form_label(form.fonction, 'Fonction :', {
+            label_attr: { class: 'flex font-semibold text-lg mx-2' }
+        }) }}
+        {{ form_widget(form.fonction, {
+            attr: {
+                class: 'flex items-center bg-gray-200 px-2 border-x border-gray-400',
+                'data-model': 'fonction'
+            }
+        }) }}
+        {{ form_widget(form.submit, {
+            label: 'Rechercher',
+            attr: { class: 'flex px-2 items-center bg-blue-600 rounded-r-xl font-semibold text-lg text-blue-100 hover:bg-blue-700' }
+        }) }}
+        {{ form_end(form) }}
+    </div>
+
+    <table class="relative overflow-x-auto w-full my-4">
+        <thead class="text-md text-gray-700 uppercase bg-gray-200">
+        <tr>
+            <th class="px-6 py-3">Collaborateur</th>
+            <th class="px-6 py-3">Fonction</th>
+            <th class="px-6 py-3">Restaurant</th>
+            <th class="px-6 py-3">Ville</th>
+            <th class="px-6 py-3">Date de début</th>
+            <th class="px-6 py-3">Date de fin</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for affectation in this.affectations %}
+            <tr class="bg-white border-b border-gray-200">
+                <td class="px-6 py-4">{{ affectation.collaborateur.prenom }} {{ affectation.collaborateur.nom }}</td>
+                <td class="px-6 py-4">{{ affectation.fonction.intitule }}</td>
+                <td class="px-6 py-4">{{ affectation.restaurant.nom }}</td>
+                <td class="px-6 py-4">{{ affectation.restaurant.ville }}</td>
+                <td class="px-6 py-4">{{ affectation.dateDebut|date('d/m/Y') }}</td>
+                <td class="px-6 py-4">{{ affectation.dateFin ? affectation.dateFin|date('d/m/Y') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr class="bg-white border-b border-gray-200">
+                <td class="px-6 py-4" colspan="4">Pas d'affectations</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        {{ knp_pagination_render(this.affectations, 'partials/pagination.html.twig') }}
+    </div>
+</div>

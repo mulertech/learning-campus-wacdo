@@ -2,9 +2,9 @@
 
 namespace App\Twig\Components;
 
-use App\Entity\RestaurantFiltre;
-use App\Form\RestaurantFiltreType;
-use App\Repository\RestaurantRepository;
+use App\Entity\CollaborateurFiltre;
+use App\Form\CollaborateurFiltreType;
+use App\Repository\CollaborateurRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -14,33 +14,34 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent('restaurant_filtre_form')]
-class RestaurantFiltreForm extends AbstractController
+#[AsLiveComponent('collaborateur_filtre_form')]
+class CollaborateurFiltreForm extends AbstractController
 {
     use ComponentWithFormTrait;
     use DefaultActionTrait;
 
     #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
+    public ?string $prenom = null;
+
+    #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
     public ?string $nom = null;
 
     #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
-    public ?string $codePostal = null;
-
-    #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
-    public ?string $ville = null;
+    public ?string $email = null;
 
     #[LiveProp(writable: true)]
     public int $page = 1;
 
     public function __construct(
-        private RestaurantRepository $restaurantRepository,
+        private CollaborateurRepository $collaborateurRepository,
         private PaginatorInterface $paginator
-    ) {
+    )
+    {
     }
 
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(RestaurantFiltreType::class, $this->createFilter());
+        return $this->createForm(CollaborateurFiltreType::class, $this->createFilter());
     }
 
     public function onPropUpdate()
@@ -53,9 +54,9 @@ class RestaurantFiltreForm extends AbstractController
     {
     }
 
-    public function getRestaurants()
+    public function getCollaborateurs()
     {
-        $query = $this->restaurantRepository->findAllWithFilter($this->createFilter());
+        $query = $this->collaborateurRepository->findAllWithFilter($this->createFilter());
 
         return $this->paginator->paginate(
             $query,
@@ -64,12 +65,12 @@ class RestaurantFiltreForm extends AbstractController
         );
     }
 
-    private function createFilter(): RestaurantFiltre
+    private function createFilter(): CollaborateurFiltre
     {
-        $filter = new RestaurantFiltre();
+        $filter = new CollaborateurFiltre();
+        $filter->setPrenom($this->prenom);
         $filter->setNom($this->nom);
-        $filter->setCodePostal($this->codePostal);
-        $filter->setVille($this->ville);
+        $filter->setEmail($this->email);
 
         return $filter;
     }

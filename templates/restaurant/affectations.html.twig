@@ -3,7 +3,9 @@
 {% block title %}Affectations de ce restaurant{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">A</span>FFECTATIONS DU RESTAURANT {{ restaurant.nom|upper }}</h1>
+    <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white">
+        <span class="text-yellow-300">A</span>FFECTATIONS DU RESTAURANT {{ restaurant.nom|upper }}
+    </h1>
 
     <div class="flex items-center justify-center">
         {{ form_start(form, {
