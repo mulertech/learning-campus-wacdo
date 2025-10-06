@@ -40,6 +40,7 @@ class AffectationFiltreType extends AbstractType
             'data_class' => AffectationFiltre::class,
             'method' => 'GET',
             'csrf_protection' => false,
+            'allow_extra_fields' => true,
         ]);
     }
 

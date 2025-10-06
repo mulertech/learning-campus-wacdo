@@ -28,6 +28,7 @@ class CollaborateurFiltreType extends AbstractType
             'data_class' => CollaborateurFiltre::class,
             'method' => 'GET',
             'csrf_protection' => false,
+            'allow_extra_fields' => true,
         ]);
     }
 

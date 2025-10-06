@@ -26,6 +26,7 @@ class RestaurantFiltreType extends AbstractType
             'data_class' => RestaurantFiltre::class,
             'method' => 'GET',
             'csrf_protection' => false,
+            'allow_extra_fields' => true,
         ]);
     }
 
