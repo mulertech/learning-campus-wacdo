@@ -71,6 +71,10 @@
         </tbody>
     </table>
 
+    <div class="pagination">
+        {{ knp_pagination_render(collaborateurs, 'partials/pagination.html.twig') }}
+    </div>
+
     <a href="{{ path('app_collaborateur_new') }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
         Créer un nouveau collaborateur
     </a>

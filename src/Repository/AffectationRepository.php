@@ -7,6 +7,7 @@ use App\Entity\AffectationFiltre;
 use App\Entity\Collaborateur;
 use App\Entity\CollaborateurAffectationFiltre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,7 +20,7 @@ class AffectationRepository extends ServiceEntityRepository
         parent::__construct($registry, Affectation::class);
     }
 
-    public function findAllWithFilter(AffectationFiltre $filter)
+    public function findAllWithFilter(AffectationFiltre $filter): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('a')
             ->leftJoin('a.restaurant', 'r')
@@ -54,9 +55,7 @@ class AffectationRepository extends ServiceEntityRepository
 
         return $queryBuilder
             ->orderBy('c.nom', 'ASC')
-            ->addOrderBy('c.prenom', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('c.prenom', 'ASC');
     }
 
     public function findByCollaborateurWithFilter(

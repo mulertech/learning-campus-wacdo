@@ -3,9 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Collaborateur;
-use App\Entity\CollaborateurAffectationFiltre;
 use App\Entity\CollaborateurFiltre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,7 +18,7 @@ class CollaborateurRepository extends ServiceEntityRepository
         parent::__construct($registry, Collaborateur::class);
     }
 
-    public function findAllWithFilter(CollaborateurFiltre $filter): array
+    public function findAllWithFilter(CollaborateurFiltre $filter): QueryBuilder
     {
         // Requête pour obtenir les collaborateurs avec leurs affectations actuelles
         $queryBuilder = $this->createQueryBuilder('c')
@@ -50,9 +50,7 @@ class CollaborateurRepository extends ServiceEntityRepository
 
         return $queryBuilder
             ->orderBy('c.nom', 'ASC')
-            ->addOrderBy('c.prenom', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('c.prenom', 'ASC');
     }
 
 

@@ -6,6 +6,7 @@ use App\Entity\CollaborateurRestaurantFiltre;
 use App\Entity\Restaurant;
 use App\Entity\RestaurantFiltre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,7 +19,7 @@ class RestaurantRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurant::class);
     }
 
-    public function findAllWithFilter(RestaurantFiltre $filter)
+    public function findAllWithFilter(RestaurantFiltre $filter): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('r')
             ->addSelect('r');
@@ -41,14 +42,10 @@ class RestaurantRepository extends ServiceEntityRepository
                 ->setParameter('ville', '%' . strtolower($filter->getVille()) . '%');
         }
 
-
-        return $queryBuilder
-            ->orderBy('r.nom', 'ASC')
-            ->getQuery()
-            ->getResult();
+        return $queryBuilder->orderBy('r.nom', 'ASC');
     }
 
-    public function findCurrentAffectationsWithFilter($restaurantId, CollaborateurRestaurantFiltre $filter)
+    public function findCurrentAffectationsWithFilter($restaurantId, CollaborateurRestaurantFiltre $filter): array
     {
         $queryBuilder = $this->createQueryBuilder('r')
             ->select('a.id, c.nom, c.prenom, c.email, f.intitule, a.dateDebut, a.dateFin')
@@ -85,7 +82,7 @@ class RestaurantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAllAffectationsWithFilter($restaurantId, CollaborateurRestaurantFiltre $filter)
+    public function findAllAffectationsWithFilter($restaurantId, CollaborateurRestaurantFiltre $filter): array
     {
         $queryBuilder = $this->createQueryBuilder('r')
             ->select('a.id, c.nom, c.prenom, c.email, f.intitule, a.dateDebut, a.dateFin')

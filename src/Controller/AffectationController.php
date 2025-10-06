@@ -10,6 +10,7 @@ use App\Form\AffectationToRestaurantType;
 use App\Form\AffectationCollaborateurToRestaurantType;
 use App\Repository\AffectationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,16 +22,23 @@ use function Symfony\Component\Clock\now;
 final class AffectationController extends AbstractController
 {
     #[Route(name: 'app_affectation_index', methods: ['GET'])]
-    public function index(AffectationRepository $affectationRepository, Request $request): Response
-    {
+    public function index(
+        AffectationRepository $affectationRepository,
+        Request $request,
+        PaginatorInterface $paginator,
+    ): Response {
         $affectationFiltre = new AffectationFiltre();
         $form = $this->createForm(AffectationFiltreType::class, $affectationFiltre);
         $form->handleRequest($request);
 
-        $affectations = $affectationRepository->findAllWithFilter($affectationFiltre);
+        $pagination = $paginator->paginate(
+            $affectationRepository->findAllWithFilter($affectationFiltre),
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('affectation/index.html.twig', [
-            'affectations' => $affectations,
+            'affectations' => $pagination,
             'form' => $form,
         ]);
     }

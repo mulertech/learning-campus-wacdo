@@ -10,6 +10,7 @@ use App\Form\RestaurantFiltreType;
 use App\Form\RestaurantType;
 use App\Repository\RestaurantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,16 +20,25 @@ use Symfony\Component\Routing\Attribute\Route;
 final class RestaurantController extends AbstractController
 {
     #[Route(name: 'app_restaurant_index', methods: ['GET'])]
-    public function index(RestaurantRepository $restaurantRepository, Request $request): Response
-    {
+    public function index(
+        RestaurantRepository $restaurantRepository,
+        Request $request,
+        PaginatorInterface $paginator
+    ): Response {
         $affectationFiltre = new RestaurantFiltre();
         $form = $this->createForm(RestaurantFiltreType::class, $affectationFiltre);
         $form->handleRequest($request);
 
-        $restaurants = $restaurantRepository->findAllWithFilter($affectationFiltre);
+        $query = $restaurantRepository->findAllWithFilter($affectationFiltre);
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('restaurant/index.html.twig', [
-            'restaurants' => $restaurants,
+            'restaurants' => $pagination,
             'form' => $form,
         ]);
     }

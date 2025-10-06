@@ -14,6 +14,7 @@ use App\Repository\AffectationRepository;
 use App\Repository\CollaborateurRepository;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,14 +24,23 @@ use Symfony\Component\Routing\Attribute\Route;
 final class CollaborateurController extends AbstractController
 {
     #[Route(name: 'app_collaborateur_index', methods: ['GET'])]
-    public function index(CollaborateurRepository $collaborateurRepository, Request $request): Response
-    {
+    public function index(
+        CollaborateurRepository $collaborateurRepository,
+        Request $request,
+        PaginatorInterface $paginator,
+    ): Response {
         $filtre = new CollaborateurFiltre();
         $form = $this->createForm(CollaborateurFiltreType::class, $filtre);
         $form->handleRequest($request);
 
+        $pagination = $paginator->paginate(
+            $collaborateurRepository->findAllWithFilter($filtre),
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('collaborateur/index.html.twig', [
-            'collaborateurs' => $collaborateurRepository->findAllWithFilter($filtre),
+            'collaborateurs' => $pagination,
             'form' => $form,
         ]);
     }
