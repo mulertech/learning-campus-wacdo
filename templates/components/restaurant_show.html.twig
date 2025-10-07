@@ -1,8 +1,4 @@
 <div {{ attributes }}>
-    <h2 class="text-center text-3xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">
-            L</span>iste des collaborateurs
-    </h2>
-
     <div class="flex items-center justify-center">
         {{ form_start(form, {
             attr: { class: 'flex bg-white rounded-xl shadow-lg border border-gray-400' }
@@ -72,7 +68,7 @@
             </tr>
         {% else %}
             <tr class="bg-white border-b border-gray-200">
-                <td colspan="5">
+                <td colspan="7" class="py-4 text-center">
                     Pas de collaborateurs
                 </td>
             </tr>

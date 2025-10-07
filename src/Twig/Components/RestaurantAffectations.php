@@ -23,7 +23,7 @@ class RestaurantAffectations extends AbstractController
     #[LiveProp(writable: true)]
     public ?Fonction $fonction = null;
 
-    #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
+    #[LiveProp(writable: true)]
     public ?string $nom = null;
 
     #[LiveProp(writable: true)]

@@ -68,7 +68,7 @@
             </tr>
         {% else %}
             <tr class="bg-white border-b border-gray-200">
-                <td class="px-6 py-4" colspan="8">Pas de collaborateur</td>
+                <td class="py-4 text-center" colspan="6">Pas de collaborateur</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -77,8 +77,4 @@
     <div class="pagination">
         {{ knp_pagination_render(this.collaborateurs, 'partials/pagination.html.twig') }}
     </div>
-
-    <a href="{{ path('app_collaborateur_new') }}" class="p-2 items-center bg-blue-600 rounded-xl font-semibold text-lg text-blue-100 hover:bg-blue-700">
-        Créer un nouveau collaborateur
-    </a>
 </div>
