@@ -91,23 +91,13 @@ final class CollaborateurController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_collaborateur_show', methods: ['GET', 'POST'])]
+    #[Route('/{id}', name: 'app_collaborateur_show', methods: ['GET'])]
     public function show(
         Collaborateur $collaborateur,
         Request $request,
-        EntityManagerInterface $entityManager,
         AffectationRepository $affectationRepository
     ): Response {
         $form = $this->createForm(CollaborateurType::class, $collaborateur);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Le collaborateur a bien été modifié.');
-
-            return $this->redirectToRoute('app_collaborateur_index', [], Response::HTTP_SEE_OTHER);
-        }
 
         $collaborateurAffectationFiltre = new CollaborateurAffectationFiltre();
         $collaborateurAffectationForm = $this->createForm(CollaborateurAffectationFiltreType::class, $collaborateurAffectationFiltre);
@@ -124,6 +114,26 @@ final class CollaborateurController extends AbstractController
             'collaborateurAffectationForm' => $collaborateurAffectationForm,
             'affectations' => $affectations,
         ]);
+    }
+
+    #[Route('/{id}/modifier', name: 'app_collaborateur_edit', methods: ['POST'])]
+    public function editCollaborateur(
+        Request $request,
+        Collaborateur $collaborateur,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $form = $this->createForm(CollaborateurType::class, $collaborateur);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le collaborateur a bien été modifié.');
+
+            return $this->redirectToRoute('app_collaborateur_show', ['id' => $collaborateur->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->redirectToRoute('app_collaborateur_show', ['id' => $collaborateur->getId()]);
     }
 
     #[Route('/{id}/nouvelle-affectation', name: 'app_collaborateur_new_affectation', methods: ['GET', 'POST'])]
@@ -153,7 +163,7 @@ final class CollaborateurController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_collaborateur_delete', methods: ['POST'])]
+    #[Route('/{id}/supprimer', name: 'app_collaborateur_delete', methods: ['POST'])]
     public function delete(Request $request, Collaborateur $collaborateur, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$collaborateur->getId(), $request->getPayload()->getString('_token'))) {

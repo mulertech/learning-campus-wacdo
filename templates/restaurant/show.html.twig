@@ -8,7 +8,7 @@
     </h1>
 
     <div class="w-fit relative mx-auto overflow-hidden shadow-xl bg-white rounded-xl p-12 mt-12">
-        {{ include('restaurant/_form.html.twig', {'button_label': 'Modifier ce restaurant'}) }}
+        {{ include('restaurant/_form.html.twig', {'button_label': 'Modifier ce restaurant', 'action': path('app_restaurant_edit', {'id': restaurant.id})}) }}
         {{ include('restaurant/_delete_form.html.twig') }}
     </div>
 

@@ -8,7 +8,7 @@
     </h1>
 
     <div class="w-fit relative mx-auto overflow-hidden shadow-xl bg-white rounded-xl p-12 mt-12">
-        {{ include('collaborateur/_form.html.twig', {'button_label': 'Modifier ce collaborateur'}) }}
+        {{ include('collaborateur/_form.html.twig', {'button_label': 'Modifier ce collaborateur', 'action': path('app_collaborateur_edit', {'id': collaborateur.id})}) }}
         {{ include('collaborateur/_delete_form.html.twig') }}
     </div>
 

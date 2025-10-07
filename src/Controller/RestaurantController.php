@@ -64,23 +64,13 @@ final class RestaurantController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_restaurant_show', methods: ['GET', 'POST'])]
+    #[Route('/{id}', name: 'app_restaurant_show', methods: ['GET'])]
     public function show(
         Restaurant $restaurant,
         RestaurantRepository $repository,
-        Request $request,
-        EntityManagerInterface $entityManager
+        Request $request
     ): Response {
         $form = $this->createForm(RestaurantType::class, $restaurant);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Le restaurant a bien été modifié.');
-
-            return $this->redirectToRoute('app_restaurant_index', [], Response::HTTP_SEE_OTHER);
-        }
 
         $collaborateurRestaurantFiltre = new CollaborateurRestaurantFiltre();
         $collaborateurRestaurantForm = $this->createForm(
@@ -102,7 +92,27 @@ final class RestaurantController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_restaurant_delete', methods: ['POST'])]
+    #[Route('/{id}/modifier', name: 'app_restaurant_edit', methods: ['POST'])]
+    public function editRestaurant(
+        Request $request,
+        Restaurant $restaurant,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $form = $this->createForm(RestaurantType::class, $restaurant);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le restaurant a bien été modifié.');
+
+            return $this->redirectToRoute('app_restaurant_show', ['id' => $restaurant->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->redirectToRoute('app_restaurant_show', ['id' => $restaurant->getId()]);
+    }
+
+    #[Route('/{id}/supprimer', name: 'app_restaurant_delete', methods: ['POST'])]
     public function delete(Request $request, Restaurant $restaurant, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$restaurant->getId(), $request->getPayload()->getString('_token'))) {
