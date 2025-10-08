@@ -3,3 +3,7 @@
 body {
     background-color: skyblue;
 }
+
+turbo-frame#modal:empty {
+    display: none !important;
+}

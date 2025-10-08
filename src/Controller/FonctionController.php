@@ -63,6 +63,14 @@ final class FonctionController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/confirmer-suppression', name: 'app_fonction_delete_confirm', methods: ['GET'])]
+    public function confirmDelete(Fonction $fonction): Response
+    {
+        return $this->render('fonction/_delete_modal.html.twig', [
+            'fonction' => $fonction,
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_fonction_delete', methods: ['POST'])]
     public function delete(Request $request, Fonction $fonction, EntityManagerInterface $entityManager): Response
     {

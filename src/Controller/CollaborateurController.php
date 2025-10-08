@@ -163,6 +163,14 @@ final class CollaborateurController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/confirmer-suppression', name: 'app_collaborateur_delete_confirm', methods: ['GET'])]
+    public function confirmDelete(Collaborateur $collaborateur): Response
+    {
+        return $this->render('collaborateur/_delete_modal.html.twig', [
+            'collaborateur' => $collaborateur,
+        ]);
+    }
+
     #[Route('/{id}/supprimer', name: 'app_collaborateur_delete', methods: ['POST'])]
     public function delete(Request $request, Collaborateur $collaborateur, EntityManagerInterface $entityManager): Response
     {

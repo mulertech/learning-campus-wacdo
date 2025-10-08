@@ -94,6 +94,14 @@ final class AffectationController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/confirmer-suppression', name: 'app_affectation_delete_confirm', methods: ['GET'])]
+    public function confirmDelete(Affectation $affectation): Response
+    {
+        return $this->render('affectation/_delete_modal.html.twig', [
+            'affectation' => $affectation,
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_affectation_delete', methods: ['POST'])]
     public function delete(Request $request, Affectation $affectation, EntityManagerInterface $entityManager): Response
     {

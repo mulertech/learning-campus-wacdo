@@ -112,6 +112,14 @@ final class RestaurantController extends AbstractController
         return $this->redirectToRoute('app_restaurant_show', ['id' => $restaurant->getId()]);
     }
 
+    #[Route('/{id}/confirmer-suppression', name: 'app_restaurant_delete_confirm', methods: ['GET'])]
+    public function confirmDelete(Restaurant $restaurant): Response
+    {
+        return $this->render('restaurant/_delete_modal.html.twig', [
+            'restaurant' => $restaurant,
+        ]);
+    }
+
     #[Route('/{id}/supprimer', name: 'app_restaurant_delete', methods: ['POST'])]
     public function delete(Request $request, Restaurant $restaurant, EntityManagerInterface $entityManager): Response
     {
