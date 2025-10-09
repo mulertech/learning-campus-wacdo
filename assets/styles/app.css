@@ -7,3 +7,66 @@ body {
 turbo-frame#modal:empty {
     display: none !important;
 }
+
+.ts-wrapper {
+    @apply w-64 mt-2;
+    position: relative;
+    z-index: 10;
+}
+
+.ts-hidden-accessible {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0) !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+.ts-wrapper .ts-control,
+.ts-wrapper.single .ts-control {
+    @apply flex items-center h-12 px-4 bg-gray-200 rounded-xl border-none shadow-none;
+    min-width: 16rem;
+}
+
+.ts-wrapper.single .ts-control input {
+    @apply text-base;
+    min-width: 14rem;
+    flex: 1;
+}
+
+.ts-wrapper.single.input-active .ts-control .item {
+    display: none !important;
+}
+
+.ts-wrapper .ts-control .item {
+    @apply bg-transparent border-none;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.ts-wrapper .ts-dropdown {
+    @apply bg-white border border-gray-300 rounded-xl shadow-lg mt-1;
+    position: absolute;
+    z-index: 1000;
+    min-width: 16rem;
+}
+
+.ts-wrapper .ts-dropdown .option {
+    @apply px-4 py-2 cursor-pointer;
+}
+
+.ts-wrapper .ts-dropdown .option:hover {
+    @apply bg-blue-100;
+}
+
+.ts-wrapper .ts-dropdown .option.active {
+    @apply bg-blue-600 text-white;
+}
+
+.ts-wrapper.focus .ts-control,
+.ts-wrapper.focused .ts-control {
+    @apply outline-none ring-2 ring-blue-500;
+}
