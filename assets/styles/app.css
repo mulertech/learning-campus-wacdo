@@ -77,7 +77,6 @@ turbo-frame#modal:empty {
     @apply bg-blue-600 text-white;
 }
 
-.ts-wrapper.focus .ts-control,
 .ts-wrapper.focused .ts-control {
     @apply outline-none ring-2 ring-blue-500;
 }
