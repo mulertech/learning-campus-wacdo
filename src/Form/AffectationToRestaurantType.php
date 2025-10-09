@@ -27,10 +27,12 @@ class AffectationToRestaurantType extends AbstractType
             ->add('dateFin')
             ->add('collaborateur', EntityType::class, [
                 'class' => Collaborateur::class,
-                'choice_label' => 'email',
+                'placeholder' => 'Sélectionner un collaborateur',
+                'autocomplete' => true,
                 'query_builder' => function (CollaborateurRepository $collaborateurRepository) {
                     return $collaborateurRepository->createQueryBuilder('c')
-                        ->orderBy('c.email', 'ASC');
+                        ->orderBy('c.nom', 'ASC')
+                        ->addOrderBy('c.prenom', 'ASC');
                 }
             ])
             ->add('fonction', EntityType::class, [
