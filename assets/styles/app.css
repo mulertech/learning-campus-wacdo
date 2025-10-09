@@ -37,14 +37,25 @@ turbo-frame#modal:empty {
     flex: 1;
 }
 
-.ts-wrapper.single.input-active .ts-control .item {
-    display: none !important;
+.ts-wrapper.single.input-active .ts-control input::placeholder {
+    opacity: 1;
+}
+
+.ts-wrapper.single:not(.input-active) .ts-control input::placeholder {
+    opacity: 0 !important;
+}
+
+.ts-wrapper.single.has-items .ts-control input {
+    width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
 }
 
 .ts-wrapper .ts-control .item {
-    @apply bg-transparent border-none;
+    @apply bg-transparent border-none text-base;
     padding: 0 !important;
     margin: 0 !important;
+    flex: 1;
 }
 
 .ts-wrapper .ts-dropdown {
