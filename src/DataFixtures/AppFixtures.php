@@ -30,7 +30,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 30; $i++) {
             $restaurant = new Restaurant()
                 ->setNom($faker->company())
-                ->setAdresse($faker->address())
+                ->setAdresse($faker->streetAddress())
                 ->setCodePostal($faker->postcode())
                 ->setVille($faker->city());
 
