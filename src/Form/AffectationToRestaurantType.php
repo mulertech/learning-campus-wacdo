@@ -23,12 +23,15 @@ class AffectationToRestaurantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateDebut')
+            ->add('dateDebut', options: [
+                'required' => true,
+            ])
             ->add('dateFin')
             ->add('collaborateur', EntityType::class, [
                 'class' => Collaborateur::class,
                 'placeholder' => 'Sélectionner un collaborateur',
                 'autocomplete' => true,
+                'required' => true,
                 'query_builder' => function (CollaborateurRepository $collaborateurRepository) {
                     return $collaborateurRepository->createQueryBuilder('c')
                         ->orderBy('c.nom', 'ASC')
@@ -38,6 +41,8 @@ class AffectationToRestaurantType extends AbstractType
             ->add('fonction', EntityType::class, [
                 'class' => Fonction::class,
                 'choice_label' => 'intitule',
+                'placeholder' => 'Sélectionner une fonction',
+                'required' => true,
             ])
             ->add('submit', SubmitType::class, ['label' => 'Enregistrer'])
         ;

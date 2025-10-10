@@ -41,7 +41,11 @@ turbo-frame#modal:empty {
     opacity: 1;
 }
 
-.ts-wrapper.single:not(.input-active) .ts-control input::placeholder {
+.ts-wrapper.single:not(.input-active):not(.has-items) .ts-control input::placeholder {
+    opacity: 1 !important;
+}
+
+.ts-wrapper.single:not(.input-active).has-items .ts-control input::placeholder {
     opacity: 0 !important;
 }
 

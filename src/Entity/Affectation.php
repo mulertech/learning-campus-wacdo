@@ -6,6 +6,7 @@ use App\Repository\AffectationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AffectationRepository::class)]
 #[UniqueEntity(
@@ -21,14 +22,17 @@ class Affectation
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Le collaborateur est obligatoire.')]
     private ?Collaborateur $collaborateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'La fonction est obligatoire.')]
     private ?Fonction $fonction = null;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Le restaurant est obligatoire.')]
     private ?Restaurant $restaurant = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

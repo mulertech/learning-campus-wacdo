@@ -2,10 +2,11 @@
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Entity\FakeCollaborateur;
+use App\DataFixtures\Entity\FakeRestaurant;
 use App\Entity\Affectation;
 use App\Entity\Collaborateur;
 use App\Entity\Fonction;
-use App\Entity\Restaurant;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -28,11 +29,7 @@ class AppFixtures extends Fixture
 
         $restaurants = [];
         for ($i = 0; $i < 30; $i++) {
-            $restaurant = new Restaurant()
-                ->setNom($faker->company())
-                ->setAdresse($faker->streetAddress())
-                ->setCodePostal($faker->postcode())
-                ->setVille($faker->city());
+            $restaurant = FakeRestaurant::new();
 
             $restaurants[] = $restaurant;
 
@@ -41,17 +38,7 @@ class AppFixtures extends Fixture
 
         $collaborateurs = [];
         for ($i = 0; $i < 300; $i++) {
-            $firstName = $faker->firstName();
-            $firstNameEmail = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $firstName));
-            $lastName = $faker->lastName();
-            $lastNameEmail = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $lastName));
-
-            $collaborateur = new Collaborateur()
-                ->setPrenom($firstName)
-                ->setNom($lastName)
-                ->setEmail($firstNameEmail . '.' . $lastNameEmail . '@example.com')
-                ->setDatePremiereEmbauche($faker->dateTimeBetween())
-                ->setAdministrateur(false);
+            $collaborateur = FakeCollaborateur::new();
 
             $collaborateurs[] = $collaborateur;
 

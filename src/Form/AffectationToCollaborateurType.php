@@ -24,6 +24,7 @@ class AffectationToCollaborateurType extends AbstractType
         $builder
             ->add('dateDebut', options: [
                 'label' => 'Date de début',
+                'required' => true,
             ])
             ->add('dateFin', options: [
                 'label' => 'Date de fin',
@@ -31,10 +32,14 @@ class AffectationToCollaborateurType extends AbstractType
             ->add('fonction', EntityType::class, [
                 'class' => Fonction::class,
                 'choice_label' => 'intitule',
+                'placeholder' => 'Sélectionner une fonction',
+                'required' => true,
             ])
             ->add('restaurant', EntityType::class, [
                 'class' => Restaurant::class,
                 'choice_label' => 'nom',
+                'placeholder' => 'Sélectionner un restaurant',
+                'required' => true,
             ])
             ->add('submit', SubmitType::class, ['label' => 'Enregistrer'])
         ;

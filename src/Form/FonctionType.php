@@ -13,7 +13,9 @@ class FonctionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('intitule')
+            ->add('intitule', options: [
+                'required' => true,
+            ])
             ->add('submit', SubmitType::class, ['label' => 'Enregistrer'])
         ;
     }

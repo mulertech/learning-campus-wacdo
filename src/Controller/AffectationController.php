@@ -47,11 +47,11 @@ final class AffectationController extends AbstractController
     public function new(Restaurant $restaurant, Request $request, EntityManagerInterface $entityManager): Response
     {
         $affectation = new Affectation();
+        $affectation->setRestaurant($restaurant);
         $form = $this->createForm(AffectationToRestaurantType::class, $affectation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $affectation->setRestaurant($restaurant);
             $entityManager->persist($affectation);
             $entityManager->flush();
 

@@ -21,10 +21,18 @@ class CollaborateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prenom')
-            ->add('nom')
-            ->add('email', EmailType::class)
-            ->add('datePremiereEmbauche')
+            ->add('prenom', options: [
+                'required' => true,
+            ])
+            ->add('nom', options: [
+                'required' => true,
+            ])
+            ->add('email', EmailType::class, [
+                'required' => true,
+            ])
+            ->add('datePremiereEmbauche', options: [
+                'required' => true,
+            ])
             ->add('administrateur', CheckboxType::class, [
                 'required' => false,
                 'help' => 'Cochez pour donner les droits administrateur'
