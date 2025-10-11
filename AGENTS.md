@@ -25,3 +25,4 @@
 - Repositories: Extend `ServiceEntityRepository`, return `QueryBuilder` for paginated queries, `array` for complete lists
 - Flash messages: Use `$this->addFlash('success', 'Message en français.')`
 - Error handling: Validate in forms with `FormError`, check CSRF tokens in delete actions
+- All front content in French
