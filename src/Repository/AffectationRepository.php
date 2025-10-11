@@ -41,16 +41,16 @@ class AffectationRepository extends ServiceEntityRepository
         }
 
         // Overlap date range filter
-        if ($filter->getDebut() || $filter->getFin()) {
-            if ($filter->getDebut()) {
-                $queryBuilder->andWhere('a.dateFin >= :debut OR a.dateFin IS NULL')
-                    ->setParameter('debut', $filter->getDebut());
-            }
-
-            if ($filter->getFin()) {
-                $queryBuilder->andWhere('a.dateDebut <= :fin')
-                    ->setParameter('fin', $filter->getFin());
-            }
+        if ($filter->getDebut() && $filter->getFin()) {
+            $queryBuilder->andWhere('a.dateDebut <= :fin AND (a.dateFin >= :debut OR a.dateFin IS NULL)')
+                ->setParameter('debut', $filter->getDebut())
+                ->setParameter('fin', $filter->getFin());
+        } elseif ($filter->getDebut()) {
+            $queryBuilder->andWhere('a.dateFin >= :debut OR a.dateFin IS NULL')
+                ->setParameter('debut', $filter->getDebut());
+        } elseif ($filter->getFin()) {
+            $queryBuilder->andWhere('a.dateDebut <= :fin')
+                ->setParameter('fin', $filter->getFin());
         }
 
         return $queryBuilder
@@ -91,13 +91,16 @@ class AffectationRepository extends ServiceEntityRepository
         $qb
             ->select('count(a.id)')
             ->where('a.collaborateur = :collaborateur')
-            ->andWhere('a.dateDebut <= :date')
-            ->andWhere($qb->expr()->orX(
-                'a.dateFin IS NULL',
-                'a.dateFin >= :date'
-            ))
-            ->setParameter('collaborateur', $affectation->getCollaborateur())
-            ->setParameter('date', $affectation->getDateDebut());
+            ->setParameter('collaborateur', $affectation->getCollaborateur());
+
+        if ($affectation->getDateFin()) {
+            $qb->andWhere('a.dateDebut <= :fin AND (a.dateFin >= :debut OR a.dateFin IS NULL)')
+                ->setParameter('debut', $affectation->getDateDebut())
+                ->setParameter('fin', $affectation->getDateFin());
+        } else {
+            $qb->andWhere('a.dateFin >= :debut OR a.dateFin IS NULL')
+                ->setParameter('debut', $affectation->getDateDebut());
+        }
 
         if ($affectation->getId()) {
             // Exclude the current affectation if it already exists in the database
