@@ -7,6 +7,7 @@ use App\DataFixtures\Entity\FakeRestaurant;
 use App\Entity\Affectation;
 use App\Entity\Collaborateur;
 use App\Entity\Fonction;
+use App\Entity\Utilisateur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -57,6 +58,12 @@ class AppFixtures extends Fixture
 
             $manager->persist($affectation);
         }
+
+        $utilisateur = new Utilisateur()
+            ->setEmail('admin@admin.fr')
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword(password_hash('password', PASSWORD_BCRYPT));
+        $manager->persist($utilisateur);
 
         $manager->flush();
     }
