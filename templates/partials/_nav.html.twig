@@ -19,7 +19,7 @@
             <p class="py-4 px-4 flex items-center">
                 Vous êtes connecté en tant que {{ app.user.email }}
             </p>
-            <a href="{{ path('app_logout') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">
+            <a href="{{ path('app_logout') }}" data-turbo="false" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">
                 Se déconnecter
             </a>
         </div>
@@ -28,7 +28,7 @@
             <div class="py-4 px-4 flex items-center">
                 Bonjour, vous êtes connecté en tant que {{ app.user.email }}
             </div>
-            <a href="{{ path('app_logout') }}" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">
+            <a href="{{ path('app_logout') }}" data-turbo="false" class="py-4 px-4 flex items-center hover:border-b-2 hover:border-green-900">
                 Se déconnecter
             </a>
         </div>

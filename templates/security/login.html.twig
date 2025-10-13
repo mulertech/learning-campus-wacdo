@@ -5,14 +5,14 @@
 {% block body %}
         {% if app.user %}
             <div class="mb-3">
-                Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">
+                Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" data-turbo="false">
                     Se déconnecter
                 </a>
             </div>
         {% else %}
             <h1 class="text-center text-4xl text-shadow-lg font-medium m-8 text-white"><span class="text-yellow-300">S</span>E CONNECTER</h1>
             <div class="grid items-center justify-center">
-                <form method="post" class="grid md:grid-cols-2 bg-white rounded-xl shadow-lg p-12 mt-12">
+                <form method="post" data-turbo="false" class="grid md:grid-cols-2 bg-white rounded-xl shadow-lg p-12 mt-12">
                     <label class="col-span-1 font-semibold text-lg my-auto" for="username">Email</label>
                     <input class="col-span-1 items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded-xl" type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>
                     <label class="col-span-1 font-semibold text-lg my-auto mt-3" for="password">Mot de passe</label>
