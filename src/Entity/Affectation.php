@@ -13,6 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
     fields: ['collaborateur', 'dateDebut'],
     message: 'Un collaborateur ne peut pas avoir deux affectations débutant à la même date.',
 )]
+#[Assert\Expression(
+    "this.getDateFin() === null or this.getDateDebut() <= this.getDateFin()",
+    message: "La date de fin doit être postérieure à la date de début."
+)]
 class Affectation
 {
     #[ORM\Id]
@@ -39,6 +43,10 @@ class Affectation
     private ?\DateTime $dateDebut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\GreaterThanOrEqual(
+        propertyPath: 'dateDebut',
+        message: 'La date de fin doit être postérieure ou égale à la date de début.'
+    )]
     private ?\DateTime $dateFin = null;
 
     public function getId(): ?int
