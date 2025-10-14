@@ -16,5 +16,4 @@ when@test:
 when@prod:
     framework:
         # Trust all proxies (Docker internal networks)
-        trusted_proxies: '%env(TRUSTED_PROXIES)%'
-        trusted_headers: [ 'x-forwarded-for', 'x-forwarded-proto', 'x-forwarded-port', 'x-forwarded-host' ]
+        trusted_proxies: '127.0.0.1,REMOTE_ADDR'
