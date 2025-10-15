@@ -91,25 +91,63 @@ Template optimisé pour les applications Symfony avec Apache et connexion à une
 - Connexion à PostgreSQL partagé
 - Intégration Traefik pour le reverse proxy
 - Support des certificats SSL
+- Configuration centralisée via `.project-config`
+- Script de vérification post-déploiement
+
+**Pré-requis dans le projet Symfony :**
+
+- Package `symfony/apache-pack` installé
+- Configuration spécifique production pour Symfony :
+  Copier le fichier `./config/mt.yaml` depuis le template vers `./config/packages/mt.yaml` dans votre projet Symfony.
+- Configuration Doctrine dans le fichier `doctrine.yaml` pour PostgreSQL (configuré automatiquement par le package mulertech/docker-dev) :
+```yaml
+doctrine:
+    dbal:
+      host: '%env(default::DATABASE_HOST)%'
+      port: '%env(default::DATABASE_PORT)%'
+      dbname: '%env(default::DATABASE_NAME)%'
+      user: '%env(default::DATABASE_USER)%'
+      password: '%env(default::DATABASE_PASSWORD)%'
+      driver: 'pdo_pgsql'
+```
 
 **Configuration requise :**
 
-A. Script automatisé `prepare_project.sh` (recommandé) :
-1. **Copier les fichiers de base puis modifier les variables du script** :
-    - Copier le contenu du template vers votre projet
-    - Modifier les variables `SUBDOMAIN`, `GIT_PROJECT`, `CONTAINER_NAME`, `DB_NAME` dans `prepare_project.sh`
+A. Script automatisé `prepare-new-project.sh` (recommandé) :
 
+1. **Copier le template vers votre projet** :
 
-2. **Rendre le script exécutable puis l'exécuter** :
+2. **Éditer le fichier `.project-config`** :
+   Modifier les 4 variables :
+    - `SUBDOMAIN` : Sous-domaine (ex: `myapp` → `https://myapp.mulertech.net`)
+    - `GIT_PROJECT` : Nom du repo GitHub (ex: `my-symfony-app`)
+    - `CONTAINER_NAME` : Nom du container Docker (ex: `docker-myapp-www`)
+    - `DB_NAME` : Nom de la base de données (ex: `myapp`)
+
+3. **Exécuter le script de préparation** :
    ```bash
-   chmod +x prepare_project.sh
-   ./prepare_project.sh
+   bash prepare-new-project.sh
    ```
+   Le script valide automatiquement les variables et configure tout le projet.
 
-3. **Lancer le déploiement** :
+4. **Ajouter la clé SSH aux Deploy Keys GitHub** :
+   ```bash
+   cat www/id_ed25519.pub
+   ```
+   Puis l'ajouter dans GitHub : Repository > Settings > Deploy keys > Add deploy key
+
+5. **Lancer le déploiement** :
    ```bash
    ./deploy.sh
    ```
+
+6. **Vérifier le déploiement** :
+   ```bash
+   bash check_deployment.sh
+   ```
+   Ce script vérifie automatiquement la configuration Symfony, les permissions, la base de données et l'accessibilité du site.
+
+📖 **Pour plus de détails, consultez** : `template-symfony/QUICK_START.md`
 
 B. Configuration manuelle (étapes détaillées) :
 1. **Copier et configurer les fichiers de base** :
