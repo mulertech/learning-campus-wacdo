@@ -21,6 +21,3 @@ when@prod:
             handler_id: null
             # Set cookie path to root
             cookie_path: /
-    doctrine:
-        orm:
-            enable_lazy_ghost_objects: true
