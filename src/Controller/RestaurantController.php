@@ -66,29 +66,13 @@ final class RestaurantController extends AbstractController
 
     #[Route('/{id}', name: 'app_restaurant_show', methods: ['GET'])]
     public function show(
-        Restaurant $restaurant,
-        RestaurantRepository $repository,
-        Request $request
+        Restaurant $restaurant
     ): Response {
         $form = $this->createForm(RestaurantType::class, $restaurant);
 
-        $collaborateurRestaurantFiltre = new CollaborateurRestaurantFiltre();
-        $collaborateurRestaurantForm = $this->createForm(
-            CollaborateurRestaurantFiltreType::class,
-            $collaborateurRestaurantFiltre
-        );
-        $collaborateurRestaurantForm->handleRequest($request);
-
-        $affectations = $repository->findCurrentAffectationsWithFilter(
-            $restaurant->getId(),
-            $collaborateurRestaurantFiltre
-        );
-
         return $this->render('restaurant/show.html.twig', [
             'restaurant' => $restaurant,
-            'affectations' => $affectations,
             'form' => $form,
-            'collaborateurRestaurantForm' => $collaborateurRestaurantForm,
         ]);
     }
 

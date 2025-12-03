@@ -19,9 +19,13 @@ class AffectationFiltreType extends AbstractType
             ->add('ville')
             ->add('debut', DateType::class, [
                 'required' => false,
+                'widget' => 'single_text',
+                'html5' => true,
             ])
             ->add('fin', DateType::class, [
                 'required' => false,
+                'widget' => 'single_text',
+                'html5' => true,
             ])
             ->add('fonction', EntityType::class, [
                 'class' => Fonction::class,

@@ -45,7 +45,7 @@ class RestaurantRepository extends ServiceEntityRepository
         return $queryBuilder->orderBy('r.nom', 'ASC');
     }
 
-    public function findCurrentAffectationsWithFilter($restaurantId, CollaborateurRestaurantFiltre $filter): array
+    public function findCurrentAffectationsWithFilter($restaurantId, CollaborateurRestaurantFiltre $filter): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('r')
             ->select('a.id, c.nom, c.prenom, c.email, f.intitule, a.dateDebut, a.dateFin')
@@ -77,9 +77,7 @@ class RestaurantRepository extends ServiceEntityRepository
 
         return $queryBuilder
             ->orderBy('c.nom', 'ASC')
-            ->addOrderBy('c.prenom', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('c.prenom', 'ASC');
     }
 
     public function findAllAffectationsWithFilter($restaurantId, CollaborateurRestaurantFiltre $filter): array

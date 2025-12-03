@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
-
 class RestaurantFiltre
 {
     public ?string $nom = null;

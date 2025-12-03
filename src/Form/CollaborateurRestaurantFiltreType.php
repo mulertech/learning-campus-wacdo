@@ -18,6 +18,8 @@ class CollaborateurRestaurantFiltreType extends AbstractType
         $builder
             ->add('debut', DateType::class, [
                 'required' => false,
+                'widget' => 'single_text',
+                'html5' => true,
             ])
             ->add('fonction', EntityType::class, [
                 'class' => Fonction::class,

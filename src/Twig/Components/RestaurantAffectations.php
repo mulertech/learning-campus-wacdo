@@ -27,7 +27,7 @@ class RestaurantAffectations extends AbstractController
     public ?string $nom = null;
 
     #[LiveProp(writable: true)]
-    public ?DateTime $debut = null;
+    public ?string $debut = null;
 
     #[LiveProp(writable: true)]
     public int $restaurantId;
@@ -53,7 +53,14 @@ class RestaurantAffectations extends AbstractController
         $filter = new CollaborateurRestaurantFiltre();
         $filter->setFonction($this->fonction);
         $filter->setNom($this->nom);
-        $filter->setDebut($this->debut);
+        
+        if ($this->debut) {
+            try {
+                $filter->setDebut(new DateTime($this->debut));
+            } catch (\Exception) {
+                $filter->setDebut(null);
+            }
+        }
 
         return $filter;
     }

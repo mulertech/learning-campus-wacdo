@@ -23,14 +23,14 @@ class RestaurantShow extends AbstractController
     use ComponentWithFormTrait;
     use DefaultActionTrait;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
     public ?Fonction $fonction = null;
 
     #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
     public ?string $nom = null;
 
-    #[LiveProp(writable: true)]
-    public ?DateTime $debut = null;
+    #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
+    public ?string $debut = null;
 
     #[LiveProp(writable: true)]
     public int $page = 1;
@@ -78,7 +78,14 @@ class RestaurantShow extends AbstractController
         $filter = new CollaborateurRestaurantFiltre();
         $filter->setFonction($this->fonction);
         $filter->setNom($this->nom);
-        $filter->setDebut($this->debut);
+        
+        if ($this->debut) {
+            try {
+                $filter->setDebut(new DateTime($this->debut));
+            } catch (\Exception $e) {
+                $filter->setDebut(null);
+            }
+        }
 
         return $filter;
     }

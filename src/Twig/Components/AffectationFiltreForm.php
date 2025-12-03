@@ -26,13 +26,13 @@ class AffectationFiltreForm extends AbstractController
     #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
     public ?string $ville = null;
 
-    #[LiveProp(writable: true)]
-    public ?DateTime $debut = null;
+    #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
+    public ?string $debut = null;
 
-    #[LiveProp(writable: true)]
-    public ?DateTime $fin = null;
+    #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
+    public ?string $fin = null;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: true, onUpdated: 'onPropUpdate')]
     public ?Fonction $fonction = null;
 
     #[LiveProp(writable: true)]
@@ -62,7 +62,6 @@ class AffectationFiltreForm extends AbstractController
     }
 
     #[LiveAction]
-    // Todo : reset page to 1 on search
     public function search(): void
     {
         $this->page = 1;
@@ -83,8 +82,23 @@ class AffectationFiltreForm extends AbstractController
     {
         $filter = new AffectationFiltre();
         $filter->setVille($this->ville);
-        $filter->setDebut($this->debut);
-        $filter->setFin($this->fin);
+        
+        if ($this->debut) {
+            try {
+                $filter->setDebut(new DateTime($this->debut));
+            } catch (\Exception) {
+                $filter->setDebut(null);
+            }
+        }
+        
+        if ($this->fin) {
+            try {
+                $filter->setFin(new DateTime($this->fin));
+            } catch (\Exception) {
+                $filter->setFin(null);
+            }
+        }
+        
         $filter->setFonction($this->fonction);
 
         return $filter;
